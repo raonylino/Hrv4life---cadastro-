@@ -19,7 +19,7 @@ class AuthModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => { 
-    RoutesAssets.login: (_) => const LoginRouter() 
+    RoutesAssets.login: (_) => const LoginRouter(), 
   };
   
 }

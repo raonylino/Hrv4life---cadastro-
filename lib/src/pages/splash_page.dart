@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:hrv4life_flutter/src/constants/image_assets.dart';
+import 'package:hrv4life_flutter/src/constants/app_assets.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 
 class SplashPage extends StatefulWidget {
@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          ImageAssets.splash,
+          AppAssets.splash,
           width: 200,
           height: 200,
         ),

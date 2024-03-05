@@ -8,6 +8,10 @@ final class RoutesAssets {
 
   // ----------------- Login -------------------//
   static const homePageLogin  = '/home';
-  static const login = '/login';  
+  static const login = '/login'; 
 
+  // ----------------- Onbording -------------------// 
+  static const onbording = '/onbording';
+  static const onbording2 = '/onbording2';
+  static const onbording3 = '/onbording3';
 }
