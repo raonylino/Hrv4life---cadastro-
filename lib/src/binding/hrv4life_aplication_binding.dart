@@ -6,7 +6,9 @@ class Hrv4lifeAplicationBinding extends ApplicationBindings {
   @override
   List<Bind<Object>> bindings() => [
         Bind.lazySingleton<RestClient>(
-          (i) => RestClient(Env.backEndBaseUrl),
+          (i) => RestClient(
+            Env.backEndBaseUrl,
+          ),
         ),
       ];
 }

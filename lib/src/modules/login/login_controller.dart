@@ -8,7 +8,7 @@ import 'package:signals_flutter/signals_flutter.dart';
 class LoginController with MessageStateMixin {
 
   LoginController({
-    required UserLoginServices loginService,
+     required UserLoginServices loginService,
   }): _loginService = loginService;
 
   final UserLoginServices _loginService; 

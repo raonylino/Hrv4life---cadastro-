@@ -22,8 +22,10 @@ class UserLoginServicesImpl implements UserLoginServices {
       switch(loginResult){
         case Left(value: AuthError()):
           return Left(ServiceException(message: 'Erro ao realizar Login'));
+          
         case Left(value: AuthUnauthorizedException()):
           return Left(ServiceException(message: 'Usuário ou senha inválidos.'));
+
         case Right(value : final acessToken):
           final sp = await SharedPreferences.getInstance();
           sp.setString(LocalStorageConstants.accessToken, acessToken);

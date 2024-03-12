@@ -7,11 +7,13 @@ final class RoutesAssets {
     static const authLogin = '/auth/login';
 
   // ----------------- Login -------------------//
-  static const homePageLogin  = '/home';
   static const login = '/login'; 
 
   // ----------------- Onbording -------------------// 
   static const onbording = '/onbording';
   static const onbording2 = '/onbording2';
   static const onbording3 = '/onbording3';
+
+    // ----------------- Home -------------------// 
+  static const homePage  = '/home';
 }

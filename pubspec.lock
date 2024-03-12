@@ -61,10 +61,10 @@ packages:
     dependency: "direct main"
     description:
       name: brasil_fields
-      sha256: "33b419e732079637831e88b118ba0e7caa17a798afd86081b3bc568d4fee2748"
+      sha256: "6b04a76cff0105368504e4b8e55552ffbcaf50b46822794b3ec622026430d60d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.14.3"
+    version: "1.14.1"
   build:
     dependency: transitive
     description:
@@ -209,6 +209,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  community_charts_common:
+    dependency: "direct main"
+    description:
+      name: community_charts_common
+      sha256: "20697244c826df0545237ebe01d61caa96a2a2e4d23c6f88890441636a4d5220"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  community_charts_flutter:
+    dependency: transitive
+    description:
+      name: community_charts_flutter
+      sha256: ca5bd07337e162daee13c19679f602cd8b3f704520d242beeebbc2e312f84f89
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   convert:
     dependency: transitive
     description:
@@ -318,6 +334,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  flutter_onboarding_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_onboarding_slider
+      sha256: "70d6b7c8d469abb31f66fd80c61915d7ff9c05d2c9001ec7db659702e7bc4f9d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.11"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -376,6 +400,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  heart_bpm:
+    dependency: "direct main"
+    description:
+      name: heart_bpm
+      sha256: "3651cf368b9b2732fb5b63f244375cc7b932665b1fd13280c70e37621d892936"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0+0"
   hrv4life_core:
     dependency: "direct main"
     description:
@@ -411,10 +443,10 @@ packages:
     dependency: transitive
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.18.1"
   io:
     dependency: transitive
     description:
@@ -527,6 +559,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   package_config:
     dependency: transitive
     description:
@@ -615,6 +655,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.2"
   pub_semver:
     dependency: transitive
     description:

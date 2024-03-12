@@ -4,6 +4,7 @@ import 'package:hrv4life_core/hrv4life_core.dart';
 import 'package:hrv4life_flutter/src/constants/app_assets.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
+import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/login/login_controller.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 import 'package:validatorless/validatorless.dart';
@@ -16,20 +17,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with MessageViewMixin {
-  
   final formKey = GlobalKey<FormState>();
   final emailEC = TextEditingController();
   final passwordEC = TextEditingController();
   final controller = Injector.get<LoginController>();
 
   @override
- void initState() {
+  void initState() {
     messageListener(controller);
 
     effect(
       () {
         if (controller.logged) {
-          Navigator.of(context).pushReplacementNamed('/home');
+          Navigator.of(context).pushReplacementNamed(RoutesAssets.homePage);
         }
       },
     );

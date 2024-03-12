@@ -1,4 +1,3 @@
-
 final class Env {
-  static const backEndBaseUrl = "BACKEND_BASE_URL";
+  static const backEndBaseUrl = String.fromEnvironment('BACKEND_BASE_URL');
 }

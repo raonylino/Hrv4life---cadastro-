@@ -1,14 +1,23 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:hrv4life_core/hrv4life_core_config.dart';
 import 'package:hrv4life_flutter/src/binding/hrv4life_aplication_binding.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/auth/auth_module.dart';
+import 'package:hrv4life_flutter/src/modules/home/home_module.dart';
 import 'package:hrv4life_flutter/src/modules/onbording/onbording_module.dart';
 import 'package:hrv4life_flutter/src/pages/splash_page.dart';
 
 void main() {
-  runApp(const hrv4lifeFlutter());
+  runZonedGuarded((){
+    runApp(const hrv4lifeFlutter());
+  }, (error, stack) { 
+    log('erro não tradado $error', error: error, stackTrace: stack);
+    throw error;
+  });
 }
 
 // ignore: camel_case_types
@@ -27,7 +36,7 @@ class hrv4lifeFlutter extends StatelessWidget {
           path: RoutesAssets.home,
            )
       ],
-      modules: [AuthModule(), OnbordingModule()],
+      modules: [AuthModule(), OnbordingModule(),HomeModule()],
       );
   }
 }
