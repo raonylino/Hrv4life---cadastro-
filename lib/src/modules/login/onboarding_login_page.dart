@@ -13,7 +13,7 @@ class OnboardingLoginPage extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return OnBoardingSlider(
-      finishButtonText: 'Register',
+      finishButtonText: 'Cadastro',
       onFinish: () {
         Navigator.push(
           context,
@@ -25,8 +25,8 @@ class OnboardingLoginPage extends StatelessWidget {
       finishButtonStyle: const FinishButtonStyle(
         backgroundColor: AppColors.primary,
       ),
-      skipTextButton:const Text(
-        'Skip',
+      skipTextButton: const Text(
+        'Proximo',
         style: TextStyle(
           fontSize: 16,
           color: AppColors.primary,
@@ -49,10 +49,10 @@ class OnboardingLoginPage extends StatelessWidget {
           ),
         );
       },
-      controllerColor: kDarkBlueColor,
+      controllerColor: AppColors.primary,
       totalPage: 3,
-      headerBackgroundColor: Colors.white,
-      pageBackgroundColor: Colors.white,
+      headerBackgroundColor: const Color.fromRGBO(63, 46, 32,1),
+      pageBackgroundColor: Colors.black,
       background: [
         Image.asset(
           AppAssets.pressentation1,
@@ -68,6 +68,8 @@ class OnboardingLoginPage extends StatelessWidget {
           AppAssets.pressentation3, 
            height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
+          opacity: const AlwaysStoppedAnimation(.5),
+
         ),
       ],
       speed: 1.8,
@@ -81,7 +83,7 @@ class OnboardingLoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 480,
+                height: 450,
               ),
               Text(
                 'Sua saúde na\n ponta do dedo',
@@ -118,27 +120,29 @@ class OnboardingLoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 480,
+                height: 450,
               ),
               Text(
-                'You’ve reached your destination.',
+                'Conheça o seu\n Corpo',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: kDarkBlueColor,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: TextStyles.instance.primary
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                'Sliding with animation',
+               Text(
+                'Veja os resultados após cada leitura e\n avalie como está sua saúde',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: TextStyles.instance.secondary
                 ),
               ),
             ],
@@ -153,27 +157,29 @@ class OnboardingLoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 480,
+                height: 450,
               ),
               Text(
-                'Start now!',
+                'Tenha controle da sua saúde',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: kDarkBlueColor,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: TextStyles.instance.primary
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                'Where everything is possible and customize your onboarding.',
+               Text(
+                'Tenha dados e indicadores para ser o protagonista do seu estilo de vida!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: Colors.white,
                   fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: TextStyles.instance.secondary
                 ),
               ),
             ],

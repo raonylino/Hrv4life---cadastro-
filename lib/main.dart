@@ -9,6 +9,7 @@ import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/auth/auth_module.dart';
 import 'package:hrv4life_flutter/src/modules/home/home_module.dart';
 import 'package:hrv4life_flutter/src/modules/onbording/onbording_module.dart';
+import 'package:hrv4life_flutter/src/modules/reading/reading_module.dart';
 import 'package:hrv4life_flutter/src/pages/splash_page.dart';
 
 void main() {
@@ -36,7 +37,7 @@ class hrv4lifeFlutter extends StatelessWidget {
           path: RoutesAssets.home,
            )
       ],
-      modules: [AuthModule(), OnbordingModule(),HomeModule()],
+      modules: [AuthModule(), OnbordingModule(),HomeModule(),ReadingModule()],
       );
   }
 }

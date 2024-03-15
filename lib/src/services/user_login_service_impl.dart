@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hrv4life_core/hrv4life_core.dart';
-
 import 'package:hrv4life_flutter/src/repositories/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

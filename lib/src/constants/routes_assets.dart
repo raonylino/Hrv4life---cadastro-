@@ -14,6 +14,11 @@ final class RoutesAssets {
   static const onbording2 = '/onbording2';
   static const onbording3 = '/onbording3';
 
-    // ----------------- Home -------------------// 
+    // ----------------- HomePage-------------------// 
   static const homePage  = '/home';
+
+      // ----------------- Reading-------------------// 
+  static const readingHome  = '/reading';
+  static const readingMorning  = '/readingmorning';
+  static const readingDaily  = '/readingdaily';
 }
