@@ -193,8 +193,10 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                       onPressed: () {
                         final valid = formKey.currentState?.validate() ?? false;
                         if (valid) {
-                          controller.login(emailEC.text, passwordEC.text);
+                          // controller.login(emailEC.text, passwordEC.text);
+                          Navigator.pushNamed(context,RoutesAssets.homePage);  
                         }
+                       
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

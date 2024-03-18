@@ -159,7 +159,7 @@ class HomePage extends StatelessWidget {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(RoutesAssets.readingMorning);
+                        Navigator.of(context).pushNamed('/home/morning');
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

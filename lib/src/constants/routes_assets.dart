@@ -1,6 +1,6 @@
 final class RoutesAssets {
   // ----------------- Home -------------------// 
-  static const home  = '/';
+  static const splash  = '/';
 
   // ----------------- Auth -------------------//
     static const auth  = '/auth';
@@ -19,6 +19,6 @@ final class RoutesAssets {
 
       // ----------------- Reading-------------------// 
   static const readingHome  = '/reading';
-  static const readingMorning  = '/readingmorning';
-  static const readingDaily  = '/readingdaily';
+  static const readingMorning  = '/reading/morning';
+  static const readingDaily  = '/reading/daily';
 }

@@ -6,6 +6,8 @@ import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 
 class ReadingPage extends StatelessWidget {
   const ReadingPage({super.key});
+  
+  get constraintsmaxHeight => null;
 
   @override
   Widget build(BuildContext context) {
@@ -50,59 +52,64 @@ class ReadingPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             Container(
-              height: 140,
+              height:  MediaQuery.of(context).size.width < 250 ? constraintsmaxHeight * 0.3 : 160,
               width: sizeOF.width * .9,
               decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      blurStyle: BlurStyle.normal,
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],),
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    blurStyle: BlurStyle.normal,
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
               child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 8),
-                          child: Container(
-                            height: 32,
-                            width: 32,
-                            decoration: const BoxDecoration(
-                              color: AppColors.primaryPure,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16)),
+                        Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
+                              child: Container(
+                                height: 32,
+                                width: 32,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.primaryPure,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16)),
+                                ),
+                                child: const Icon(Icons.wb_sunny_outlined,
+                                    color: Colors.white, size: 20),
+                              ),
                             ),
-                            child: const Icon(Icons.wb_sunny_outlined,
-                                color: Colors.white, size: 20),
-                          ),
-                        ),
-                        Text(
-                          'Avaliação Funcional',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: TextStyles.instance.secondary,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 90),
-                          child: IconButton(
-                            onPressed: () {
-                               Navigator.pushReplacementNamed(context, RoutesAssets.readingMorning);
-                            },
-                            icon: const Icon(
-                              Icons.chevron_right_outlined,
+                            Text(
+                              'Avaliação Funcional',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: TextStyles.instance.secondary,
+                              ),
                             ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/reading/morning');
+                          },
+                          icon: const Icon(
+                            Icons.chevron_right_outlined,
                           ),
                         ),
                       ],
@@ -115,10 +122,10 @@ class ReadingPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5,left: 20,right: 20),
                     child: Text(
                         'Faça essa medida logo após acordar e receba orientação para saber como melhorar o seu dia',
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.black38,
                           fontSize: 14,
