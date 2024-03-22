@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:heart_bpm/heart_bpm.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
+import 'package:hrv4life_flutter/src/modules/heart_bpm/heart_bpm.dart';
 import 'package:hrv4life_flutter/src/modules/reading/readingDaily/daily_model.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
@@ -24,9 +24,11 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   
   @override
   Widget build(BuildContext context) {
+
     var bpm = Provider.of<DailyModel>(context);
     final sizeOF = MediaQuery.sizeOf(context);
     isBPMEnabled = true;
+   
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Container(
@@ -75,7 +77,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                           ),
                         ),
                         Text(
-                          '${bpm.bpmValues.last.value.toStringAsFixed(0)} Bpm',
+                          '${bpm.bpmValues.toStringAsFixed(0)} Bpm',
                           style: TextStyle(
                             color: AppColors.black,
                             fontSize: 28,
@@ -160,37 +162,32 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Provider(
-                          create: (context) {
-                            return DailyModel(bpmValues: bpmValues);
+                        HeartBPMDialog(
+                          context: context,
+                          showTextValues: false,
+                          borderRadius: 50,
+                          cameraWidgetHeight: 75,
+                          cameraWidgetWidth: 75,
+                          onRawData: (value) {
+                            setState(() {
+                              if (data.length >= 100) data.removeAt(0);
+                              data.add(value);
+                            });
+                            // chart = BPMChart(data);
                           },
-                          child: HeartBPMDialog(
-                            context: context,
-                            showTextValues: false,
-                            borderRadius: 50,
-                            cameraWidgetHeight: 75,
-                            cameraWidgetWidth: 75,
-                            onRawData: (value) {
-                              setState(() {
-                                if (data.length >= 100) data.removeAt(0);
-                                data.add(value);
-                              });
-                              // chart = BPMChart(data);
+                          onBPM: (value) => setState(
+                            () {
+                              if (bpmValues.length >= 100) bpmValues.removeAt(0);
+                              bpmValues.add(SensorValue(
+                                  value: value.toDouble(), time: DateTime.now(),));
                             },
-                            onBPM: (value) => setState(
-                              () {
-                                if (bpmValues.length >= 100) bpmValues.removeAt(0);
-                                bpmValues.add(SensorValue(
-                                    value: value.toDouble(), time: DateTime.now(),));
-                              },
-                            ),
-                            // sampleDelay: 1000 ~/ 20,
-                            // child: Container(
-                            //   height: 50,
-                            //   width: 100,
-                            //   child: BPMChart(data),
-                            // ),
                           ),
+                          // sampleDelay: 1000 ~/ 20,
+                          // child: Container(
+                          //   height: 50,
+                          //   width: 100,
+                          //   child: BPMChart(data),
+                          // ),
                         ),
                       ],
                     ),
