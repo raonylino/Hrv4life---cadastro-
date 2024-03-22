@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
@@ -50,9 +51,9 @@ class ReadingPage extends StatelessWidget {
                 color: AppColors.secondaryLight,
               ),
             ),
-            const SizedBox(height: 30),
+           SizedBox(height: sizeOF.height * 0.03),
             Container(
-              height:  MediaQuery.of(context).size.width < 250 ? constraintsmaxHeight * 0.3 : 160,
+              height: sizeOF.height * .21,
               width: sizeOF.width * .9,
               decoration: BoxDecoration(
                 color: AppColors.white,
@@ -91,7 +92,7 @@ class ReadingPage extends StatelessWidget {
                                     color: Colors.white, size: 20),
                               ),
                             ),
-                            Text(
+                            AutoSizeText(
                               'Avaliação Funcional',
                               textAlign: TextAlign.left,
                               style: TextStyle(
@@ -123,7 +124,7 @@ class ReadingPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5,left: 20,right: 20),
-                    child: Text(
+                    child: AutoSizeText(
                         'Faça essa medida logo após acordar e receba orientação para saber como melhorar o seu dia',
                         textAlign: TextAlign.justify,
                         style: TextStyle(
@@ -147,7 +148,7 @@ class ReadingPage extends StatelessWidget {
           // TabItem(icon: Icons.edit_note, title: 'Diario'),
           TabItem(icon: Icons.add, title: 'Leitura'),
           // TabItem(icon: Icons.message, title: 'Chat'),
-          TabItem(icon: Icons.people, title: 'Perfil'),
+          TabItem(icon: Icons.calendar_month_rounded, title: 'Historico'),
         ],
         initialActiveIndex: 1,
         onTap: (int i) {

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
         children: [
           Container(
             alignment: AlignmentDirectional.centerStart,
-            height: 120,
+            height: sizeOF.height * 0.15,
             width: sizeOF.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
@@ -83,20 +84,25 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 40, left: 150),
-                  child: Icon(
-                    Icons.notifications_outlined,
-                    color: Colors.white,
+                 Padding(
+                  padding: const EdgeInsets.only(top: 40, left: 150),
+                  child: IconButton(
+                    onPressed: () {
+                         Navigator.pushReplacementNamed(context, RoutesAssets.menuPage);
+                    },
+                   icon: const Icon(
+                    Icons.menu,
                     size: 25,
+                    color: Colors.white,
+                   ),
                   ),
                 )
               ],
             ),
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: sizeOF.height * 0.03),
           Container(
-            height: 180,
+            height: sizeOF.height * .23,
             width: sizeOF.width * .9,
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -130,7 +136,7 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Ainda não registramos a sua Avaliação de \nhoje',
+                child: AutoSizeText('Ainda não registramos a sua Avaliação de \nhoje',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black38,
@@ -174,10 +180,10 @@ class HomePage extends StatelessWidget {
               ),
             ]),
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: sizeOF.height * 0.03),
           Container(
             alignment: AlignmentDirectional.centerStart,
-            height: 140,
+            height: sizeOF.height * 0.16,
             width: MediaQuery.of(context).size.width * .9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -235,7 +241,7 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 1, left: 15, right: 15),
-                child: Text(
+                child: AutoSizeText(
                     'Aqui vamos montar um banco de dados local com algumas dicas de saúde e ai o app sorteia uma delas a cada dia para aparecer aqui',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -246,9 +252,9 @@ class HomePage extends StatelessWidget {
               ),
             ]),
           ),
-          const SizedBox(height: 30),
+           SizedBox(height: sizeOF.height * 0.03),
           Container(
-            height: 180,
+            height: sizeOF.height * 0.21,
             width: sizeOF.width * .9,
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -282,7 +288,7 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(
+                child: AutoSizeText(
                     'Quer anotar seu peso, pressão, glicemia, \ntemperatura',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -336,7 +342,7 @@ class HomePage extends StatelessWidget {
           // TabItem(icon: Icons.edit_note, title: 'Diario'),
           TabItem(icon: Icons.add, title: 'Leitura'),
           // TabItem(icon: Icons.message, title: 'Chat'),
-          TabItem(icon: Icons.people, title: 'Perfil'),
+          TabItem(icon: Icons.calendar_month_rounded, title: 'Historico'),
         ],
         initialActiveIndex: 0,
         onTap: (int i) {
@@ -345,6 +351,7 @@ class HomePage extends StatelessWidget {
               Navigator.pushReplacementNamed(context, RoutesAssets.homePage);
             case 1:
               Navigator.pushReplacementNamed(context, RoutesAssets.readingHome);
+           
           }
         },
       ),

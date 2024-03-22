@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 40.0, top: 38.0),
+                padding: const EdgeInsets.only(left: 40.0, top: 10.0),
                 child: Text(
                   'Entrar',
                   style: TextStyle(
@@ -76,20 +76,20 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 40.0, top: 1.0),
+                padding: EdgeInsets.only(left: 40.0, top: 10.0),
                 child: Text(
-                  'Informe seu\n usuário e senha',
+                  'Informe seu\nusuário e senha',
                   style: Hrv4lifeThema.titleStyle,
                 ),
               ),
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: sizeOF.height * 0.04,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40.0, vertical: 8.0),
+                padding: const EdgeInsets.only(left: 40.0, top: 10.0),
                 child: SizedBox(
                   height: 40,
+                  width: sizeOF.width * .8,
                   child: TextFormField(
                     controller: emailEC,
                     validator: Validatorless.multiple([
@@ -102,20 +102,23 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                   ),
                 ),
               ),
+               SizedBox(
+                height: sizeOF.height * 0.04,  
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 20.0),
+                padding: const EdgeInsets.only(left: 40.0, top: 10.0),
                 child: SizedBox(
                   height: 40,
+                  width: sizeOF.width * .8,
                   child: Watch(
                     (_) {
                       return TextFormField(
                         obscureText: controller.obscurePassword,
                         controller: passwordEC,
                         validator: Validatorless.multiple(
-                            [Validatorless.required('Password obrigatório')]),
+                            [Validatorless.required('Senha obrigatório')]),
                         decoration: InputDecoration(
-                          label: const Text('Password'),
+                          label: const Text('Senha'),
                           suffixIcon: IconButton(
                             onPressed: () {
                               controller.passwordToggle();
@@ -146,30 +149,30 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Row(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Divider(
-                          thickness: 0.1,
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  const Text("ou"),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: const Divider(
-                          thickness: 0.1,
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(40.0),
+              //   child: Row(children: <Widget>[
+              //     Expanded(
+              //       child: Container(
+              //           margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              //           child: const Divider(
+              //             thickness: 0.1,
+              //             color: Colors.black,
+              //             height: 36,
+              //           )),
+              //     ),
+              //     const Text("ou"),
+              //     Expanded(
+              //       child: Container(
+              //           margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+              //           child: const Divider(
+              //             thickness: 0.1,
+              //             color: Colors.black,
+              //             height: 36,
+              //           )),
+              //     ),
+              //   ]),
+              // ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -194,9 +197,8 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin {
                         final valid = formKey.currentState?.validate() ?? false;
                         if (valid) {
                           // controller.login(emailEC.text, passwordEC.text);
-                          Navigator.pushNamed(context,RoutesAssets.homePage);  
+                          Navigator.pushNamed(context, RoutesAssets.homePage);
                         }
-                       
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

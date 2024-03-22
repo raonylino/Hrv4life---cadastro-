@@ -29,4 +29,5 @@ class AppColors {
   static const Color positiveLight = Color(0xFFC6F6D5);
 
   static const Color borderInput = Color(0xFFcbdfd7);
+  static const Color neutral = Color(0xffe0dee6);
 }
