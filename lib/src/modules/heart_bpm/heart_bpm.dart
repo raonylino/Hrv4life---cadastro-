@@ -6,6 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:hrv4life_flutter/src/modules/reading/readingDaily/daily_model.dart';
 import 'package:provider/provider.dart';
 
+class HeartBPMModel extends ChangeNotifier {
+  int _currentValue = 0;
+
+  int get currentValue => _currentValue;
+
+  void updateCurrentValue(int newValue) {
+    _currentValue = newValue;
+    notifyListeners();
+  }
+}
+
 /// Class to store one sample data point
 class SensorValue {
   /// timestamp of datapoint
@@ -283,8 +294,8 @@ class _HeartBPPView extends State<HeartBPMDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => DailyModel(bpmValues: currentValue),
+    return ChangeNotifierProvider<HeartBPMModel>.value(
+      value: HeartBPMModel(),
       builder: (context, child) =>  Container(
         child: isCameraInitialized
             ? Column(
