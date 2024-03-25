@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
@@ -21,14 +20,13 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   //  Widget chart = BPMChart(data);
   bool isBPMEnabled = false;
   Widget? dialog;
-  
+
   @override
   Widget build(BuildContext context) {
 
-    var bpm = Provider.of<DailyModel>(context);
     final sizeOF = MediaQuery.sizeOf(context);
     isBPMEnabled = true;
-   
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Container(
@@ -65,29 +63,35 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   ],
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Icon(
-                            Icons.favorite,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Icon(
+                              Icons.favorite,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${bpm.bpmValues.toStringAsFixed(0)} Bpm',
-                          style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: TextStyles.instance.primary,
+                          Consumer<DailyModel>(
+                            builder: (context, dailyModel, child) {
+                              return Text(
+                                dailyModel.getLastBpmValue(),
+                                style: TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: TextStyles.instance.primary,
+                                ),
+                              );
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -157,14 +161,14 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     width: 107,
                     alignment: Alignment.bottomCenter,
                     decoration:
-                    BoxDecoration(border: Border.all(color: Colors.green)),
+                        BoxDecoration(border: Border.all(color: Colors.green)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         HeartBPMDialog(
                           context: context,
-                          showTextValues: false,
+                          showTextValues: true,
                           borderRadius: 50,
                           cameraWidgetHeight: 75,
                           cameraWidgetWidth: 75,
@@ -177,9 +181,12 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                           },
                           onBPM: (value) => setState(
                             () {
-                              if (bpmValues.length >= 100) bpmValues.removeAt(0);
+                              if (bpmValues.length >= 100)
+                                bpmValues.removeAt(0);
                               bpmValues.add(SensorValue(
-                                  value: value.toDouble(), time: DateTime.now(),));
+                                value: value.toDouble(),
+                                time: DateTime.now(),
+                              ));
                             },
                           ),
                           // sampleDelay: 1000 ~/ 20,
@@ -253,7 +260,9 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     height: 40,
                     width: 147,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('teste');
+                      },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.white,

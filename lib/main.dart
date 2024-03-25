@@ -9,14 +9,25 @@ import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/auth/auth_module.dart';
 import 'package:hrv4life_flutter/src/modules/home/home_module.dart';
 import 'package:hrv4life_flutter/src/modules/menu/menu_module.dart';
+import 'package:hrv4life_flutter/src/modules/reading/readingDaily/daily_model.dart';
 import 'package:hrv4life_flutter/src/modules/reading/reading_module.dart';
 import 'package:hrv4life_flutter/src/pages/splash_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runZonedGuarded((){
-    runApp(const hrv4lifeFlutter());
-  }, (error, stack) { 
-    log('erro não tradado $error', error: error, stackTrace: stack);
+  runZonedGuarded(() {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<DailyModel>.value(
+            value: DailyModel(),
+          ),
+        ],
+        child: const hrv4lifeFlutter(),
+      ),
+    );
+  }, (error, stack) {
+    log('Erro não tratado $error', error: error, stackTrace: stack);
     throw error;
   });
 }
