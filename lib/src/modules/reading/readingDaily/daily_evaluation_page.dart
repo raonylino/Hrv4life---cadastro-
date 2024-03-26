@@ -24,6 +24,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   @override
   Widget build(BuildContext context) {
 
+    final heartBPMModel = Provider.of<HeartBPMModel>(context);
     final sizeOF = MediaQuery.sizeOf(context);
     isBPMEnabled = true;
 
@@ -75,18 +76,14 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                               Icons.favorite,
                             ),
                           ),
-                          Consumer<DailyModel>(
-                            builder: (context, dailyModel, child) {
-                              return Text(
-                                dailyModel.getLastBpmValue(),
-                                style: TextStyle(
-                                  color: AppColors.black,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: TextStyles.instance.primary,
-                                ),
-                              );
-                            },
+                          Text(
+                            '${heartBPMModel.currentValue} bpm',
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: TextStyles.instance.primary,
+                            ),
                           ),
                         ],
                       ),
@@ -262,6 +259,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         print('teste');
+                        
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

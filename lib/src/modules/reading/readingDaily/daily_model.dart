@@ -3,8 +3,8 @@ import 'package:hrv4life_flutter/src/modules/heart_bpm/heart_bpm.dart';
 
 class DailyModel extends ChangeNotifier {
   
-  List<SensorValue> _bpmValues = [];
-
+  final List<SensorValue> _bpmValues = [];
+  final List<SensorValue> _currentValue = [];
   // Método para adicionar um valor BPM à lista
   void addBpmValue(SensorValue value) {
     _bpmValues.add(value);
@@ -13,8 +13,8 @@ class DailyModel extends ChangeNotifier {
 
   // Método para obter o último valor da lista de valores BPM
 String getLastBpmValue() {
-  if (_bpmValues.isNotEmpty) {
-    final lastValue = _bpmValues.last;
+  if (_currentValue.isNotEmpty) {
+    final lastValue = _currentValue.last;
     return '${lastValue.value.toStringAsFixed(0)} Bpm'; // Corrigido aqui
   } else {
     return '0 Bpm';

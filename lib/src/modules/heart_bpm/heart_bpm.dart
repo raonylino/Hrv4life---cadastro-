@@ -10,10 +10,10 @@ class HeartBPMModel extends ChangeNotifier {
   int _currentValue = 0;
 
   int get currentValue => _currentValue;
-
   void updateCurrentValue(int newValue) {
     _currentValue = newValue;
-    notifyListeners(); // Notificar os ouvintes sobre a alteração
+    print('Novo valor de currentValue: $_currentValue'); // Adicionando um log
+    notifyListeners();
   }
 }
 
@@ -307,8 +307,8 @@ class _HeartBPPView extends State<HeartBPMDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HeartBPMModel>.value(
-      value: _heartBPMModel,
+    return ChangeNotifierProvider<HeartBPMModel>(
+      create: (_) => _heartBPMModel,
       child: Consumer<HeartBPMModel>(builder: (context, heartBPMModel, child) {
         return Container(
           child: isCameraInitialized
