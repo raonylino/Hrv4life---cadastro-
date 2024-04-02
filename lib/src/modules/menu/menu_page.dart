@@ -227,6 +227,26 @@ class MenuPage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(
+              height: sizeOF.height * 0.05,
+            ),
+            Container(
+              height: 50,
+              width: 50,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: IconButton(
+                onPressed: () {
+                   Navigator.popAndPushNamed(context, RoutesAssets.homePage);
+                },
+                 icon: const Icon(
+                  Icons.close,
+                  size: 30,
+                 ),),
+            ),
           ],
         ),
       ),

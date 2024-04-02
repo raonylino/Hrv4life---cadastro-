@@ -5,6 +5,7 @@ import 'package:hrv4life_flutter/src/constants/app_assets.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/modules/login/login_page.dart';
+import 'package:hrv4life_flutter/src/modules/register/register_name_page.dart';
 
 class OnboardingLoginPage extends StatelessWidget {
   final Color kDarkBlueColor = const Color(0xFF053149);
@@ -18,7 +19,7 @@ class OnboardingLoginPage extends StatelessWidget {
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => const LoginPage(),
+            builder: (context) => const RegisterNamePage(),
           ),
         );
       },

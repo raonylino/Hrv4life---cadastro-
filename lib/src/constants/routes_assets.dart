@@ -24,4 +24,16 @@ final class RoutesAssets {
 
   // ----------------- Menu-------------------//
   static const menuPage = '/menu';
+
+  // ----------------- Historic-------------------//
+  static const historicPage = '/historic';
+
+  // ----------------- Resgiter -------------------//
+  static const registerHome = '/register';
+  static const registerName = '/register/name';
+  static const registerQuestion = '/register/question';
+  static const registerQuestion2 = '/register/question2';
+  static const registerQuestion3 = '/register/question3';
+  static const registerQuestion4 = '/register/question4';
+  
 }

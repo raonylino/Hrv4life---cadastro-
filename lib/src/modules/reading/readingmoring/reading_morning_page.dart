@@ -20,6 +20,7 @@ class _ReadingMorningPageState extends State<ReadingMorningPage> {
   String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
+    final sizeOF = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -51,8 +52,8 @@ class _ReadingMorningPageState extends State<ReadingMorningPage> {
                 ),
               ),
               SizedBox(
-                width: 295,
-                height: 331,
+                width: sizeOF.width * 0.6,
+                height: sizeOF.height * 0.4,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Image.asset(AppAssets.womanInstruction),
@@ -125,8 +126,8 @@ class _ReadingMorningPageState extends State<ReadingMorningPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 60,
+             SizedBox(
+                height: sizeOF.height * 0.05,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -134,8 +135,8 @@ class _ReadingMorningPageState extends State<ReadingMorningPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
-                      height: 40,
-                      width: 147,
+                      height: sizeOF.height * 0.05,
+                      width: sizeOF.width * 0.37,
                       child: ElevatedButton.icon(
                         onPressed: () {
                           Navigator.popAndPushNamed(
@@ -162,8 +163,8 @@ class _ReadingMorningPageState extends State<ReadingMorningPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      width: 147,
-                      height: 40,
+                     height: sizeOF.height * 0.05,
+                      width: sizeOF.width * 0.37,
                       decoration: BoxDecoration(
                         boxShadow: const [
                           BoxShadow(

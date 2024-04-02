@@ -3,7 +3,6 @@ import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heart_bpm.dart';
-import 'package:hrv4life_flutter/src/modules/reading/readingDaily/daily_model.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
@@ -51,8 +50,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
             Padding(
               padding: const EdgeInsets.all(30),
               child: Container(
-                height: 139,
-                width: 327,
+                height: sizeOF.height * 0.15,
+                width: sizeOF.width * 0.8,
                 alignment: Alignment.topCenter,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -76,14 +75,19 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                               Icons.favorite,
                             ),
                           ),
-                          Text(
-                            '${heartBPMModel.currentValue} bpm',
-                            style: TextStyle(
-                              color: AppColors.black,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: TextStyles.instance.primary,
-                            ),
+                          Consumer(
+                            builder: (context, HeartBPMModel heartBPMModel, child) {
+                              return Text(
+                              '${heartBPMModel.currentValue} bpm',
+                              style: TextStyle(
+                                color: AppColors.black,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: TextStyles.instance.primary,
+                              ),
+                            );
+                            }
+                           
                           ),
                         ],
                       ),
@@ -114,6 +118,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                         ],
                         fullProgressColor: AppColors.primaryLight,
                         mergeMode: true,
+                        animationDuration: 20,
                         onGetText: (double value) {
                           return Text(
                             '${value.toInt()}%',
@@ -258,7 +263,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     width: 147,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        print('teste');
+                
                         
                       },
                       style: ElevatedButton.styleFrom(

@@ -41,68 +41,71 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
             ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 60),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white24,
+            child: SizedBox(
+              width: sizeOF.width *.9,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 50),
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white24,
+                      ),
+                      child: const Icon(
+                        Icons.person_outline_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.person_outline_rounded,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 70),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Bom dia,',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: TextStyles.instance.secondary,
+                          ),
+                        ),
+                        Text(
+                          'Nome do Usuario',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: TextStyles.instance.secondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                   Padding(
+                    padding: const EdgeInsets.only(top: 40, left: 120),
+                    child: IconButton(
+                      onPressed: () {
+                           Navigator.pushReplacementNamed(context, RoutesAssets.menuPage);
+                      },
+                     icon: const Icon(
+                      Icons.menu,
+                      size: 25,
                       color: Colors.white,
-                      size: 30,
+                     ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 70),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Bom dia,',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontFamily: TextStyles.instance.secondary,
-                        ),
-                      ),
-                      Text(
-                        'Nome do Usuario',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: TextStyles.instance.secondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                 Padding(
-                  padding: const EdgeInsets.only(top: 40, left: 150),
-                  child: IconButton(
-                    onPressed: () {
-                         Navigator.pushReplacementNamed(context, RoutesAssets.menuPage);
-                    },
-                   icon: const Icon(
-                    Icons.menu,
-                    size: 25,
-                    color: Colors.white,
-                   ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(height: sizeOF.height * 0.03),
           Container(
-            height: sizeOF.height * .23,
+            height: sizeOF.height * .22,
             width: sizeOF.width * .9,
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -180,7 +183,7 @@ class HomePage extends StatelessWidget {
               ),
             ]),
           ),
-          SizedBox(height: sizeOF.height * 0.03),
+          SizedBox(height: sizeOF.height * 0.02),
           Container(
             alignment: AlignmentDirectional.centerStart,
             height: sizeOF.height * 0.16,
@@ -252,7 +255,7 @@ class HomePage extends StatelessWidget {
               ),
             ]),
           ),
-           SizedBox(height: sizeOF.height * 0.03),
+           SizedBox(height: sizeOF.height * 0.02),
           Container(
             height: sizeOF.height * 0.21,
             width: sizeOF.width * .9,
@@ -351,7 +354,8 @@ class HomePage extends StatelessWidget {
               Navigator.pushReplacementNamed(context, RoutesAssets.homePage);
             case 1:
               Navigator.pushReplacementNamed(context, RoutesAssets.readingHome);
-           
+            case 2:
+              Navigator.pushReplacementNamed(context, RoutesAssets.historicPage);
           }
         },
       ),

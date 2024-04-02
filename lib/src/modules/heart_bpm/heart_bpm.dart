@@ -309,37 +309,35 @@ class _HeartBPPView extends State<HeartBPMDialog> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HeartBPMModel>(
       create: (_) => _heartBPMModel,
-      child: Consumer<HeartBPMModel>(builder: (context, heartBPMModel, child) {
-        return Container(
-          child: isCameraInitialized
-              ? Column(
-                  children: [
-                    Container(
-                      constraints: BoxConstraints.tightFor(
-                        width: widget.cameraWidgetWidth ?? 100,
-                        height: widget.cameraWidgetHeight ?? 130,
-                      ),
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(widget.borderRadius ?? 10),
-                        child: _controller!.buildPreview(),
-                      ),
+      child: Container(
+        child: isCameraInitialized
+            ? Column(
+                children: [
+                  Container(
+                    constraints: BoxConstraints.tightFor(
+                      width: widget.cameraWidgetWidth ?? 100,
+                      height: widget.cameraWidgetHeight ?? 130,
                     ),
-                    //A developer has to choose whether they want to show this Text widget. (Implemented by Karl Mathuthu)
-                    if (widget.showTextValues == true) ...{
-                      Text(currentValue.toStringAsFixed(0)),
-                    } else
-                      const SizedBox(),
-                    widget.child == null ? const SizedBox() : widget.child!,
-                  ],
-                )
-              : Center(
-                  /// A developer has to customize the loading widget (Implemented by Karl Mathuthu)
-                  child: widget.centerLoadingWidget ??
-                      const CircularProgressIndicator(),
-                ),
-        );
-      }),
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(widget.borderRadius ?? 10),
+                      child: _controller!.buildPreview(),
+                    ),
+                  ),
+                  //A developer has to choose whether they want to show this Text widget. (Implemented by Karl Mathuthu)
+                  if (widget.showTextValues == true) ...{
+                    Text(currentValue.toStringAsFixed(0)),
+                  } else
+                    const SizedBox(),
+                  widget.child == null ? const SizedBox() : widget.child!,
+                ],
+              )
+            : Center(
+                /// A developer has to customize the loading widget (Implemented by Karl Mathuthu)
+                child: widget.centerLoadingWidget ??
+                    const CircularProgressIndicator(),
+              ),
+      ),
     );
   }
 }

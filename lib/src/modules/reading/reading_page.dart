@@ -157,7 +157,9 @@ class ReadingPage extends StatelessWidget {
               Navigator.pushReplacementNamed(context, RoutesAssets.homePage);
             case 1:
               Navigator.pushReplacementNamed(context, RoutesAssets.readingHome);
-          }
+            case 2:
+              Navigator.pushReplacementNamed(context, RoutesAssets.historicPage);
+          } 
         },
       ),
     );
