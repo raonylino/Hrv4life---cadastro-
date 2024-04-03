@@ -63,6 +63,7 @@ dependencies:
   get_it: ^7.6.7
   wave_linear_progress_indicator: ^0.1.0
   scroll_date_picker: ^3.8.0
+  gender_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:

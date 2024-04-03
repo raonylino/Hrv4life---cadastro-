@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
@@ -13,6 +14,9 @@ class OnboardingLoginPage extends StatelessWidget {
 
    @override
   Widget build(BuildContext context) {
+
+        final sizeOF = MediaQuery.sizeOf(context);
+
     return OnBoardingSlider(
       finishButtonText: 'Cadastro',
       onFinish: () {
@@ -24,10 +28,11 @@ class OnboardingLoginPage extends StatelessWidget {
         );
       },
       finishButtonStyle: const FinishButtonStyle(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primaryLight,
+        
       ),
       skipTextButton: const Text(
-        'Proximo',
+        'Pular',
         style: TextStyle(
           fontSize: 16,
           color: AppColors.primary,
@@ -52,24 +57,23 @@ class OnboardingLoginPage extends StatelessWidget {
       },
       controllerColor: AppColors.primary,
       totalPage: 3,
-      headerBackgroundColor: const Color.fromRGBO(63, 46, 32,1),
-      pageBackgroundColor: Colors.black,
+      headerBackgroundColor: Colors.white,
+      pageBackgroundColor: Colors.white,
       background: [
         Image.asset(
           AppAssets.pressentation1,
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * .8,
           width: MediaQuery.of(context).size.width,
         ),
         Image.asset(
           AppAssets.pressentation2,
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * .8,
           width: MediaQuery.of(context).size.width,
         ),
         Image.asset(
           AppAssets.pressentation3, 
-           height: MediaQuery.of(context).size.height,
+           height: MediaQuery.of(context).size.height * .8,
           width: MediaQuery.of(context).size.width,
-          opacity: const AlwaysStoppedAnimation(.5),
 
         ),
       ],
@@ -83,28 +87,28 @@ class OnboardingLoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 450,
+             SizedBox(
+                height: sizeOF.height * .55 ,
               ),
               Text(
                 'Sua saúde na\n ponta do dedo',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: TextStyles.instance.primary,
-                  color: Colors.white,
+                  color: AppColors.primaryPure,
                   fontSize: 28.0,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
                Text(
                 'A qualquer momento, em qualquer lugar',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: TextStyles.instance.secondary,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -120,27 +124,27 @@ class OnboardingLoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 450,
+               SizedBox(
+                height: sizeOF.height * .55 ,
               ),
               Text(
                 'Conheça o seu\n Corpo',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color:AppColors.primaryPure,
                   fontSize: 28.0,
                   fontWeight: FontWeight.w700,
                   fontFamily: TextStyles.instance.primary
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
                Text(
                 'Veja os resultados após cada leitura e\n avalie como está sua saúde',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                   fontFamily: TextStyles.instance.secondary
@@ -157,27 +161,27 @@ class OnboardingLoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 450,
+               SizedBox(
+                height: sizeOF.height * .55 ,
               ),
               Text(
                 'Tenha controle da sua saúde',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.primaryPure,
                   fontSize: 28.0,
                   fontWeight: FontWeight.w700,
                   fontFamily: TextStyles.instance.primary
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
                Text(
                 'Tenha dados e indicadores para ser o protagonista do seu estilo de vida!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                   fontFamily: TextStyles.instance.secondary

@@ -35,5 +35,6 @@ final class RoutesAssets {
   static const registerQuestion2 = '/register/question2';
   static const registerQuestion3 = '/register/question3';
   static const registerQuestion4 = '/register/question4';
+  static const registerQuestion5 = '/register/question5';
   
 }

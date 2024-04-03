@@ -183,8 +183,9 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                           },
                           onBPM: (value) => setState(
                             () {
-                              if (bpmValues.length >= 100)
+                              if (bpmValues.length >= 100) {
                                 bpmValues.removeAt(0);
+                              }
                               bpmValues.add(SensorValue(
                                 value: value.toDouble(),
                                 time: DateTime.now(),
