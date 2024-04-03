@@ -9,8 +9,9 @@ class AppAssets {
   static const String maleGender = 'assets/images/male.png';
   static const String femaleGender = 'assets/images/female.png';
   static const String notGender = 'assets/images/declarar.png';
-  static const splash = 'assets/images/logo.png';
+  static const String splash = 'assets/images/logo.png';
   static const String womanInstruction = 'assets/images/woman_instruction.png';
+  static const String heartGif = 'assets/images/heart.gif';
 
     /* ---------------------------------- ANIMATION --------------------------------- */
   static const String pulse = 'assets/animation/pulse2.riv';

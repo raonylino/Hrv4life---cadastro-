@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hrv4life_flutter/src/constants/app_assets.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
+import 'package:hrv4life_flutter/src/modules/heart_bpm/heartBPM_controller.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heart_bpm.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 class DailyEvaluationPage extends StatefulWidget {
@@ -22,8 +24,9 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
 
   @override
   Widget build(BuildContext context) {
+    HeartBPMController heartBPMController = GetIt.instance<HeartBPMController>();
 
-    final heartBPMModel = Provider.of<HeartBPMModel>(context);
+
     final sizeOF = MediaQuery.sizeOf(context);
     isBPMEnabled = true;
 
@@ -75,21 +78,23 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                               Icons.favorite,
                             ),
                           ),
-                          Consumer(
-                            builder: (context, HeartBPMModel heartBPMModel, child) {
-                              return Text(
-                              '${heartBPMModel.currentValue} bpm',
-                              style: TextStyle(
-                                color: AppColors.black,
-                                fontSize: 28,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: TextStyles.instance.primary,
-                              ),
-                            );
-                            }
-                           
+                          Text(
+                          '${heartBPMController.currentValue} bpm',
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: TextStyles.instance.primary,
                           ),
+                                                      ),
                         ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.asset(
+                          AppAssets.heartGif,
+                          fit:BoxFit.cover,
+                          ),
                       ),
                     ],
                   ),
@@ -170,7 +175,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       children: [
                         HeartBPMDialog(
                           context: context,
-                          showTextValues: true,
+                          showTextValues: false,
                           borderRadius: 50,
                           cameraWidgetHeight: 75,
                           cameraWidgetWidth: 75,

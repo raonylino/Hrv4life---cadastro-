@@ -4,7 +4,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_getit/flutter_getit.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hrv4life_flutter/src/modules/heart_bpm/heartBPM_controller.dart';
+
 
 class HeartBPMModel extends ChangeNotifier {
   int _currentValue = 0;
@@ -137,7 +140,9 @@ class HeartBPMDialog extends StatefulWidget {
 }
 
 class _HeartBPPView extends State<HeartBPMDialog> {
-  late HeartBPMModel _heartBPMModel;
+
+  HeartBPMController heartBPMController = GetIt.instance<HeartBPMController>();
+
 
   /// Camera controller
   CameraController? _controller;
@@ -155,7 +160,6 @@ class _HeartBPPView extends State<HeartBPMDialog> {
   void initState() {
     super.initState();
     _initController();
-    _heartBPMModel = HeartBPMModel();
   }
 
   @override
@@ -287,6 +291,7 @@ class _HeartBPPView extends State<HeartBPMDialog> {
       _tempBPM = (1 - widget.alpha) * currentValue + widget.alpha * _tempBPM;
       setState(() {
         currentValue = _tempBPM.toInt();
+        heartBPMController.updateCurrentValue(_tempBPM.toInt());
         // _bpm = _tempBPM;
       });
       widget.onBPM(currentValue);
@@ -294,50 +299,40 @@ class _HeartBPPView extends State<HeartBPMDialog> {
 
     // double newOut = widget.alpha * newValue + (1 - widget.alpha) * _pastBPM;
     // _pastBPM = newOut;
-    if (_counter > 0) {
-      _tempBPM /= _counter;
-      _tempBPM = (1 - widget.alpha) * _heartBPMModel.currentValue +
-          widget.alpha * _tempBPM;
-      _heartBPMModel.updateCurrentValue(_tempBPM.toInt());
-      widget.onBPM(_heartBPMModel.currentValue);
-    }
 
     return currentValue;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HeartBPMModel>(
-      create: (_) => _heartBPMModel,
-      child: Container(
-        child: isCameraInitialized
-            ? Column(
-                children: [
-                  Container(
-                    constraints: BoxConstraints.tightFor(
-                      width: widget.cameraWidgetWidth ?? 100,
-                      height: widget.cameraWidgetHeight ?? 130,
-                    ),
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(widget.borderRadius ?? 10),
-                      child: _controller!.buildPreview(),
-                    ),
+    return Container(
+      child: isCameraInitialized
+          ? Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints.tightFor(
+                    width: widget.cameraWidgetWidth ?? 100,
+                    height: widget.cameraWidgetHeight ?? 130,
                   ),
-                  //A developer has to choose whether they want to show this Text widget. (Implemented by Karl Mathuthu)
-                  if (widget.showTextValues == true) ...{
-                    Text(currentValue.toStringAsFixed(0)),
-                  } else
-                    const SizedBox(),
-                  widget.child == null ? const SizedBox() : widget.child!,
-                ],
-              )
-            : Center(
-                /// A developer has to customize the loading widget (Implemented by Karl Mathuthu)
-                child: widget.centerLoadingWidget ??
-                    const CircularProgressIndicator(),
-              ),
-      ),
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(widget.borderRadius ?? 10),
+                    child: _controller!.buildPreview(),
+                  ),
+                ),
+                //A developer has to choose whether they want to show this Text widget. (Implemented by Karl Mathuthu)
+                if (widget.showTextValues == true) ...{
+                  Text(currentValue.toStringAsFixed(0)),
+                } else 
+                  const SizedBox(),
+                widget.child == null ? const SizedBox() : widget.child!,
+              ],
+            )
+          : Center(
+              /// A developer has to customize the loading widget (Implemented by Karl Mathuthu)
+              child: widget.centerLoadingWidget ??
+                  const CircularProgressIndicator(),
+            ),
     );
   }
 }
