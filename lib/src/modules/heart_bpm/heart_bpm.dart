@@ -1,106 +1,55 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// library heart_bpm;
-
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_getit/flutter_getit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heartBPM_controller.dart';
+// Modelo para armazenar o valor atual do BPM cardíaco
 
-
-class HeartBPMModel extends ChangeNotifier {
-  int _currentValue = 0;
-
-  int get currentValue => _currentValue;
-  void updateCurrentValue(int newValue) {
-    _currentValue = newValue;
-    print('Novo valor de currentValue: $_currentValue'); // Adicionando um log
-    notifyListeners();
-  }
-}
-
-/// Class to store one sample data point
+/// Classe para armazenar um ponto de dados de amostra
 class SensorValue {
-  /// timestamp of datapoint
+  /// timestamp do ponto de dados
   final DateTime time;
 
-  /// value of datapoint
-  final num value;
+  /// valor do ponto de dados
+  final double value; // Alterado para double
 
-  SensorValue({required this.time, required this.value});
+  SensorValue({required this.time, required num value})
+      : value = value.toDouble(); // Convertido para double
 
-  /// Returns JSON mapped data point
+  /// Retorna um ponto de dados mapeado em JSON
   Map<String, dynamic> toJSON() => {'time': time, 'value': value};
 
-  /// Map a list of data samples to a JSON formatted array.
-  ///
-  /// Map a list of [data] samples to a JSON formatted array. This is
-  /// particularly useful to store [data] to database.
+  /// Mapeia uma lista de amostras de [data] para um array formatado em JSON.
   static List<Map<String, dynamic>> toJSONArray(List<SensorValue> data) =>
       List.generate(data.length, (index) => data[index].toJSON());
 }
 
-/// Obtains heart beats per minute using camera sensor
-///
-/// Using the smartphone camera, the widget estimates the skin tone variations
-/// over time. These variations are due to the blood flow in the arteries
-/// present below the skin of the fingertips.
+/// Obtém batimentos cardíacos por minuto usando o sensor da câmera
 // ignore: must_be_immutable
 class HeartBPMDialog extends StatefulWidget {
-  /// This is the Loading widget, A developer has to customize it.
+  /// Este é o widget de carregamento
   final Widget? centerLoadingWidget;
   final double? cameraWidgetHeight;
   final double? cameraWidgetWidth;
   bool? showTextValues = false;
   final double? borderRadius;
 
-  /// Callback used to notify the caller of updated BPM measurement
-  ///
-  /// Should be non-blocking as it can affect
+  /// Callback usado para notificar o chamador da medição atualizada do BPM
   final void Function(int) onBPM;
 
-  /// Callback used to notify the caller of updated raw data sample
-  ///
-  /// Should be non-blocking as it can affect
+  /// Callback usado para notificar o chamador dos dados brutos da amostra atualizada
   final void Function(SensorValue)? onRawData;
 
-  /// Camera sampling rate in milliseconds
+  /// Taxa de amostragem da câmera em milissegundos
   final int sampleDelay;
 
-  /// Parent context
+  /// Contexto pai
   final BuildContext context;
 
-  /// Smoothing factor
-  ///
-  /// Factor used to compute exponential moving average of the realtime data
-  /// using the formula:
-  /// ```
-  /// $y_n = alpha * x_n + (1 - alpha) * y_{n-1}$
-  /// ```
-  double alpha = 0.6;
-
-  /// Additional child widget to display
+  /// Widget filho adicional para exibir
   final Widget? child;
 
-  /// Obtains heart beats per minute using camera sensor
-  ///
-  /// Using the smartphone camera, the widget estimates the skin tone variations
-  /// over time. These variations are due to the blood flow in the arteries
-  /// present below the skin of the fingertips.
-  ///
-  /// This is a [Dialog] widget and hence needs to be displayer using [showDialog]
-  /// function. For example:
-  /// ```
-  /// await showDialog(
-  ///   context: context,
-  ///   builder: (context) => HeartBPMDialog(
-  ///     onData: (value) => print(value),
-  ///   ),
-  /// );
-  /// ```
-  ///
-
+  /// Obtém batimentos cardíacos por minuto usando o sensor da câmera
   HeartBPMDialog({
     super.key,
     this.centerLoadingWidget,
@@ -110,50 +59,29 @@ class HeartBPMDialog extends StatefulWidget {
     this.borderRadius,
     required this.onBPM,
     this.onRawData,
-    this.sampleDelay = 2000 ~/ 30,
+    this.sampleDelay = 1000 ~/ 30, //DEFINIR QUANTOS FPS EM MS
     required this.context,
-    this.alpha = 0.8,
     this.child,
   });
 
-  /// Set the smoothing factor for exponential averaging
-  ///
-  /// the scaling factor [alpha] is used to compute exponential moving average of the
-  /// realtime data using the formula:
-  /// ```
-  /// $y_n = alpha * x_n + (1 - alpha) * y_{n-1}$
-  /// ```
-  void setAlpha(double a) {
-    if (a <= 0) {
-      throw Exception(
-          "$HeartBPMDialog: smoothing factor cannot be 0 or negative");
-    }
-    if (a > 1) {
-      throw Exception(
-          "$HeartBPMDialog: smoothing factor cannot be greater than 1");
-    }
-    alpha = a;
-  }
-
   @override
+  // ignore: library_private_types_in_public_api
   _HeartBPPView createState() => _HeartBPPView();
 }
 
 class _HeartBPPView extends State<HeartBPMDialog> {
-
   HeartBPMController heartBPMController = GetIt.instance<HeartBPMController>();
 
-
-  /// Camera controller
+  /// Controlador da câmera
   CameraController? _controller;
 
-  /// Used to set sampling rate
+  /// Usado para definir a taxa de amostragem
   bool _processing = false;
 
-  /// Current value
+  /// Valor atual
   int currentValue = 0;
 
-  /// to ensure camara was initialized
+  /// para garantir que a câmera foi inicializada
   bool isCameraInitialized = false;
 
   @override
@@ -168,36 +96,32 @@ class _HeartBPPView extends State<HeartBPMDialog> {
     super.dispose();
   }
 
-  /// Deinitialize the camera controller
+  /// Desinicializa o controlador da câmera
   void _deinitController() async {
     isCameraInitialized = false;
     if (_controller == null) return;
-    // await _controller.stopImageStream();
     await _controller!.dispose();
-    // while (_processing) {}
-    // _controller = null;
   }
 
-  /// Initialize the camera controller
-  ///
-  /// Function to initialize the camera controller and start data collection.
+  /// Inicializa o controlador da câmera
   Future<void> _initController() async {
     if (_controller != null) return;
     try {
-      // 1. get list of all available cameras
-      List<CameraDescription> _cameras = await availableCameras();
-      // 2. assign the preferred camera with low resolution and disable audio
-      _controller = CameraController(_cameras.first, ResolutionPreset.low,
+      // 1. obter lista de todas as câmeras disponíveis
+      List<CameraDescription> cameras = await availableCameras();
+
+      // 2. atribuir a câmera preferida com baixa resolução e desabilitar o áudio
+      _controller = CameraController(cameras.first, ResolutionPreset.low,
           enableAudio: false, imageFormatGroup: ImageFormatGroup.yuv420);
 
-      // 3. initialize the camera
+      // 3. inicializar a câmera
       await _controller!.initialize();
 
-      // 4. set torch to ON and start image stream
+      // 4. definir a tocha para ON e iniciar o fluxo de imagens
       Future.delayed(const Duration(milliseconds: 500))
           .then((value) => _controller!.setFlashMode(FlashMode.torch));
 
-      // 5. register image streaming callback
+      // 5. registrar o callback de streaming de imagens
       _controller!.startImageStream((image) {
         if (!_processing && mounted) {
           _processing = true;
@@ -222,25 +146,21 @@ class _HeartBPPView extends State<HeartBPMDialog> {
       growable: true);
 
   void _scanImage(CameraImage image) async {
-    // make system busy
-    // setState(() {
-    //   _processing = true;
-    // });
-
-    // get the average value of the image
-    double _avg =
+    // torna o sistema ocupado
+    // obter o valor médio da imagem
+    double avg =
         image.planes.first.bytes.reduce((value, element) => value + element) /
             image.planes.first.bytes.length;
 
     measureWindow.removeAt(0);
-    measureWindow.add(SensorValue(time: DateTime.now(), value: _avg));
+    measureWindow.add(SensorValue(time: DateTime.now(), value: avg));
 
-    _smoothBPM(_avg).then((value) {
+    _smoothBPM(avg).then((value) {
       widget.onRawData!(
-        // call the provided function with the new data sample
+        // chama a função fornecida com a nova amostra de dados
         SensorValue(
           time: DateTime.now(),
-          value: _avg,
+          value: avg,
         ),
       );
 
@@ -255,51 +175,93 @@ class _HeartBPPView extends State<HeartBPMDialog> {
     });
   }
 
-  /// Smooth the raw measurements using Exponential averaging
-  /// the scaling factor [alpha] is used to compute exponential moving average of the
-  /// realtime data using the formula:
-  /// ```
-  /// $y_n = alpha * x_n + (1 - alpha) * y_{n-1}$
-  /// ```
   Future<int> _smoothBPM(double newValue) async {
-    double maxVal = 0, _avg = 0;
 
-    measureWindow.forEach((element) {
-      _avg += element.value / measureWindow.length;
-      if (element.value > maxVal) maxVal = element.value as double;
-    });
 
-    double _threshold = (maxVal + _avg) / 2;
-    int _counter = 0, previousTimestamp = 0;
-    double _tempBPM = 0;
-    for (int i = 1; i < measureWindow.length; i++) {
-      // find rising edge
-      if (measureWindow[i - 1].value < _threshold &&
-          measureWindow[i].value > _threshold) {
-        if (previousTimestamp != 0) {
-          _counter++;
-          _tempBPM += 60000 /
-              (measureWindow[i].time.millisecondsSinceEpoch -
-                  previousTimestamp); // convert to per minute
+// 1. Suavização ZigZag
+    for (int i = 2; i < measureWindow.length - 2; i++) {
+      if ((measureWindow[i - 1].value < measureWindow[i].value &&
+              measureWindow[i + 1].value < measureWindow[i].value) ||
+          (measureWindow[i - 1].value > measureWindow[i].value &&
+              measureWindow[i + 1].value > measureWindow[i].value)) {
+        if ((measureWindow[i].value - measureWindow[i + 2].value).abs() < 7) {
+          measureWindow[i] = SensorValue(
+            time: measureWindow[i].time,
+            value: (measureWindow[i - 1].value + measureWindow[i + 2].value) /
+                2, // Média simples
+          );
         }
-        previousTimestamp = measureWindow[i].time.millisecondsSinceEpoch;
       }
     }
 
-    if (_counter > 0) {
-      _tempBPM /= _counter;
-      _tempBPM = (1 - widget.alpha) * currentValue + widget.alpha * _tempBPM;
-      setState(() {
-        currentValue = _tempBPM.toInt();
-        heartBPMController.updateCurrentValue(_tempBPM.toInt());
-        // _bpm = _tempBPM;
-      });
-      widget.onBPM(currentValue);
+// 2. Média Móvel Ponderada
+    List<double> weights = [0.68, 0.35, 0.49, 0.16];
+    for (int i = 0; i < measureWindow.length - 3; i++) {
+      // -3 para cobrir os 4 pesos
+      measureWindow[i] = SensorValue(
+        time: measureWindow[i].time,
+        value: weights[0] * measureWindow[i].value +
+            weights[1] * measureWindow[i + 1].value +
+            weights[2] * measureWindow[i + 2].value +
+            weights[3] * measureWindow[i + 3].value,
+      );
     }
 
-    // double newOut = widget.alpha * newValue + (1 - widget.alpha) * _pastBPM;
-    // _pastBPM = newOut;
+// 4. Detecção de picos e cálculo da FC
+    // Cálculo das derivadas
+    List<double> firstDerivative = [];
+    List<double> secondDerivative = [];
+    for (int i = 1; i < measureWindow.length - 1; i++) {
+      // Aproximação da primeira derivada
+      firstDerivative
+          .add((measureWindow[i + 1].value - measureWindow[i - 1].value) / 2);
+      // Aproximação da segunda derivada
+      secondDerivative.add(measureWindow[i + 1].value -
+          2 * measureWindow[i].value +
+          measureWindow[i - 1].value);
+    }
 
+    // Detecção de picos
+    int _counter = 0;
+    double _tempBPM = 0;
+    int previousTimestamp = 0;
+
+    // Definir valores para amplitude mínima e distância mínima
+    double minAmplitude = 5.0;
+    int minDistance = 428; // em milissegundos
+
+    for (int i = 1; i < secondDerivative.length - 1; i++) {
+      // Verifica se a segunda derivada muda de sinal (de positivo para negativo)
+      if (secondDerivative[i - 1] > 0 && secondDerivative[i] < 0) {
+        // Critérios de seleção de picos
+        bool isPeak = true;
+
+        // Amplitude mínima
+        if (secondDerivative[i].abs() < minAmplitude) {
+          isPeak = false;
+        }
+
+        // Distância mínima
+        if (previousTimestamp != 0 &&
+            measureWindow[i].time.millisecondsSinceEpoch - previousTimestamp <
+                minDistance) {
+          isPeak = false;
+        }
+
+        // Registro do pico e calculo de FC
+        if (isPeak) {
+          if (previousTimestamp != 0) {
+            _counter++;
+            _tempBPM += 60000 /
+                (measureWindow[i].time.millisecondsSinceEpoch -
+                    previousTimestamp);
+          }
+          previousTimestamp = measureWindow[i].time.millisecondsSinceEpoch;
+        }
+      }
+    }
+    currentValue = measureWindow[measureWindow.length - 1].value.toInt();
+    heartBPMController.updateCurrentValue(currentValue);
     return currentValue;
   }
 
@@ -320,16 +282,14 @@ class _HeartBPPView extends State<HeartBPMDialog> {
                     child: _controller!.buildPreview(),
                   ),
                 ),
-                //A developer has to choose whether they want to show this Text widget. (Implemented by Karl Mathuthu)
                 if (widget.showTextValues == true) ...{
                   Text(currentValue.toStringAsFixed(0)),
-                } else 
+                } else
                   const SizedBox(),
                 widget.child == null ? const SizedBox() : widget.child!,
               ],
             )
           : Center(
-              /// A developer has to customize the loading widget (Implemented by Karl Mathuthu)
               child: widget.centerLoadingWidget ??
                   const CircularProgressIndicator(),
             ),

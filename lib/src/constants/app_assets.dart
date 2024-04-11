@@ -3,7 +3,7 @@ class AppAssets {
   /* --------------------------------- IMAGES --------------------------------- */
   static const String logo = 'assets/images/LogoCicularpq.png';
   static const String logowide = 'assets/images/LogoPrimary.png';
-  static const String pressentation1 = 'assets/images/onboarding1.png';
+  static const String pressentation1 = 'assets/images/onboarding1.gif';
   static const String pressentation2 = 'assets/images/onboarding2.png';
   static const String pressentation3 = 'assets/images/onboarding3.png';
   static const String maleGender = 'assets/images/male.png';
@@ -13,7 +13,7 @@ class AppAssets {
   static const String womanInstruction = 'assets/images/woman_instruction.png';
   static const String heartGif = 'assets/images/heart.gif';
 
-    /* ---------------------------------- ANIMATION --------------------------------- */
+  /* ---------------------------------- ANIMATION --------------------------------- */
   static const String pulse = 'assets/animation/pulse2.riv';
 
   /* ---------------------------------- ICONS --------------------------------- */
