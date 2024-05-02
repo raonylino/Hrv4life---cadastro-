@@ -136,6 +136,91 @@ class ReadingPage extends StatelessWidget {
                 ],
               ),
             ),
+                   SizedBox(height: sizeOF.height * 0.03),
+            Container(
+              height: sizeOF.height * .17,
+              width: sizeOF.width * .9,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    blurStyle: BlurStyle.normal,
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
+                              child: Container(
+                                height: 32,
+                                width: 32,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.primaryPure,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16)),
+                                ),
+                                child: const Icon(Icons.wifi_tethering,
+                                    color: Colors.white, size: 20),
+                              ),
+                            ),
+                            AutoSizeText(
+                              'Respiração Guiada',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: TextStyles.instance.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, RoutesAssets.homePacer);
+                          },
+                          icon: const Icon(
+                            Icons.chevron_right_outlined,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .8,
+                    child: const Divider(
+                      color: Colors.black12,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5,left: 20,right: 20),
+                    child: AutoSizeText(
+                        'Controle sua respiração no melhor ritmo para sua saúde',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black38,
+                          fontSize: 14,
+                          fontFamily: TextStyles.instance.secondary,
+                        )),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

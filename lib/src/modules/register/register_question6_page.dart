@@ -1,20 +1,22 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:gender_picker/source/enums.dart';
-import 'package:gender_picker/source/gender_picker.dart';
-import 'package:hrv4life_flutter/src/constants/app_assets.dart';
+import 'package:flutter/services.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
+import 'package:validatorless/validatorless.dart';
 
-
-class RegisterQuestion4Page extends StatefulWidget {
-  const RegisterQuestion4Page({super.key});
+class RegisterQuestion6Page extends StatefulWidget {
+  const RegisterQuestion6Page({super.key});
 
   @override
-  State<RegisterQuestion4Page> createState() => _RegisterQuestion4PageState();
+  State<RegisterQuestion6Page> createState() => _RegisterQuestion6PageState();
 }
 
-class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
+class _RegisterQuestion6PageState extends State<RegisterQuestion6Page> {
+  final formKey = GlobalKey<FormState>();
+  final alturaEC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final sizeOF = MediaQuery.sizeOf(context);
@@ -29,7 +31,7 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
               child: SizedBox(
                 height: 2,
                 child: LinearProgressIndicator(
-                  value: .45,
+                  value: .75,
                   minHeight: 10,
                   color: AppColors.secondaryBar,
                   backgroundColor: Colors.black12,
@@ -37,8 +39,7 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: SizedBox(
                 width: sizeOF.width * .8,
                 child: Text(
@@ -75,7 +76,7 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Qual sexo designado ao nascer?',
+                  'Qual o seu peso atual?',
                   style: TextStyle(
                     color: AppColors.primaryPure,
                     fontSize: 16,
@@ -86,35 +87,33 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GenderPickerWithImage(
-                femaleImage: const AssetImage(AppAssets.femaleGender),
-                femaleText: 'Femenino',
-                maleImage: const AssetImage(AppAssets.maleGender),
-                maleText: 'Masculino',
-                otherGenderImage: const AssetImage(AppAssets.notGender),
-                otherGenderText: 'Não Declarar',
-                showOtherGender: true,
-                verticalAlignedText: true,
-                selectedGender: Gender.Male,
-                selectedGenderTextStyle: TextStyle(
-                    color: AppColors.primaryPure,
-                    fontFamily: TextStyles.instance.secondary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    ),
-                unSelectedGenderTextStyle: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.normal),
-                onChanged: (Gender? gender) {
-                  
-                },
-                equallyAligned: true,
-                animationDuration: const Duration(milliseconds: 300),
-                isCircular: true,
-                // default : true,
-                opacityOfGradient: .1,
-                padding: const EdgeInsets.all(3),
-                size: 95, //default : 40
+              padding: const EdgeInsets.only(top: 10.0),
+              child: SizedBox(
+                width: sizeOF.width * .8,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: alturaEC,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          PesoInputFormatter(),
+                        ],
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Peso obrigatório'),
+                        ]),
+                        decoration: const InputDecoration(
+                          labelText: 'Peso',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 12), // Definir altura do campo de texto
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             const Spacer(),
@@ -129,14 +128,13 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.popAndPushNamed(
-                            context, RoutesAssets.registerQuestion3);
+                            context, RoutesAssets.registerQuestion5);
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.w600),
+                        textStyle: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       label: const Text(
                         'Voltar',
@@ -170,15 +168,16 @@ class _RegisterQuestion4PageState extends State<RegisterQuestion4Page> {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                           Navigator.popAndPushNamed(
-                            context, RoutesAssets.registerQuestion5);
+                       final valid = formKey.currentState?.validate() ?? false;
+                       if(valid){
+                        Navigator.pushNamed(context, RoutesAssets.registerQuestion7);
+                       } 
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.w600),
+                        textStyle: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       label: const Text('Avançar'),
                       icon: const Icon(

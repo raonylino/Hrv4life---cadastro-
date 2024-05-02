@@ -6,6 +6,7 @@ import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heartBPM_controller.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heart_bpm.dart';
+import 'package:lottie/lottie.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 class DailyEvaluationPage extends StatefulWidget {
@@ -91,10 +92,18 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Image.asset(
-                          AppAssets.heartGif,
-                          fit:BoxFit.cover,
+                        child: Container(
+                          alignment: Alignment.topCenter,
+                          height: sizeOF.height * 0.12,
+                          width: sizeOF.width * 0.8,
+                          child: Transform.scale(
+                            scale: 3.0,
+                            child: Lottie.asset(
+                              AppAssets.pulseHeart,
+                              fit: BoxFit.contain,
+                            ),
                           ),
+                        ),
                       ),
                     ],
                   ),

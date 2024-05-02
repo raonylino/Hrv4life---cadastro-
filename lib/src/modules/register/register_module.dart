@@ -6,6 +6,9 @@ import 'package:hrv4life_flutter/src/modules/register/register_question2_page.da
 import 'package:hrv4life_flutter/src/modules/register/register_question3_page.dart';
 import 'package:hrv4life_flutter/src/modules/register/register_question4_page.dart';
 import 'package:hrv4life_flutter/src/modules/register/register_question5_page.dart';
+import 'package:hrv4life_flutter/src/modules/register/register_question6_page.dart';
+import 'package:hrv4life_flutter/src/modules/register/register_question7_page.dart';
+import 'package:hrv4life_flutter/src/modules/register/register_question8_page.dart';
 import 'package:hrv4life_flutter/src/modules/register/register_question_page.dart';
 
 
@@ -21,6 +24,9 @@ class RegisterModule extends FlutterGetItModule{
     '/question3' :(context) => const RegisterQuestion3Page(),
     '/question4' :(context) => const RegisterQuestion4Page(),
     '/question5' :(context) => const RegisterQuestion5Page(),
+    '/question6' :(context) => const RegisterQuestion6Page(),
+    '/question7' :(context) => const RegisterQuestion7Page(),
+    '/question8' :(context) => const RegisterQuestion8Page(),
     
     };
   

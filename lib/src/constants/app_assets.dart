@@ -15,8 +15,13 @@ class AppAssets {
 
   /* ---------------------------------- ANIMATION --------------------------------- */
   static const String pulse = 'assets/animation/pulse2.riv';
+  static const String pacerFace = 'assets/animation/pacerFaceLottie.json';
+  static const String pulseHeart = 'assets/animation/pulseHeartLottie.json';
+  static const String pulseCircle = 'assets/animation/pulseCircleLottie.json';
+    static const String mapLottie = 'assets/animation/mapLottie.json';
+    static const String pacerCompleto = 'assets/animation/pacerCompleto.json';
+
 
   /* ---------------------------------- ICONS --------------------------------- */
   static const String google = 'assets/images/google.svg';
-
 }

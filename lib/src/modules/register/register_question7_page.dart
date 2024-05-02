@@ -3,19 +3,21 @@ import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
 
-class RegisterQuestion2Page extends StatefulWidget {
-  const RegisterQuestion2Page({super.key});
+class RegisterQuestion7Page extends StatefulWidget {
+  const RegisterQuestion7Page({super.key});
 
   @override
-  State<RegisterQuestion2Page> createState() => _RegisterQuestion2PageState();
+  State<RegisterQuestion7Page> createState() => _RegisterQuestion7PageState();
 }
 
-class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
-  bool isCheckedChronicle = false;
-  bool isCheckedBad = false;
-  bool isCheckedMoreOrLess = false;
-  bool isCheckedGood = false;
-  bool isCheckedPerfect = false;
+class _RegisterQuestion7PageState extends State<RegisterQuestion7Page> {
+  bool isCheckedDiabetes = false;
+  bool isCheckedHipertensao = false;
+  bool isCheckedPressao = false;
+  bool isCheckedCardiaco = false;
+  bool isCheckedAnemia = false;
+  bool isCheckedFumante = false;
+  bool isCheckedNenhuma = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
               child: SizedBox(
                 height: 2,
                 child: LinearProgressIndicator(
-                  value: .15,
+                  value: .90,
                   minHeight: 10,
                   color: AppColors.secondaryBar,
                   backgroundColor: Colors.black12,
@@ -43,7 +45,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
               child: SizedBox(
                 width: sizeOF.width * .8,
                 child: Text(
-                  'Sua Saúde',
+                  'Seu histórico',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 24,
@@ -56,7 +58,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                'Para personalizarmos a sua experiência com o aplicativo, precisamos saber quais são os seus objetivos e interesses',
+                'É importante conhecer um pouco mais sobre seu histórico de saúde',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
@@ -75,7 +77,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Como você percebe a sua saúde?',
+                  'Você possui alguma das condições \nlistadas abaixo?',
                   style: TextStyle(
                     color: AppColors.primaryPure,
                     fontSize: 16,
@@ -100,7 +102,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Tenho doença crônica',
+                        'Diabetes',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -112,15 +114,11 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
-                        value: isCheckedChronicle,
+                        value: isCheckedDiabetes,
                         onChanged: (value) {
                           setState(() {
-                            isCheckedChronicle = value ?? false;
-                            isCheckedBad = false;
-                            isCheckedGood = false;
-                            isCheckedMoreOrLess = false;
-                            isCheckedGood = false;
-                            isCheckedPerfect = false;
+                            isCheckedDiabetes = value ?? false;
+                            isCheckedNenhuma = false;
                           });
                         },
                         splashRadius: 10,
@@ -160,7 +158,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Ruim',
+                        'Hipertensão (Pressão Alta)',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -172,15 +170,11 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
-                        value: isCheckedBad,
+                        value: isCheckedHipertensao,
                         onChanged: (value) {
                           setState(() {
-                            isCheckedBad = value ?? false;
-                            isCheckedChronicle = false;
-                            isCheckedGood = false;
-                            isCheckedMoreOrLess = false;
-                            isCheckedGood = false;
-                            isCheckedPerfect = false;
+                            isCheckedHipertensao = value ?? false;
+                            isCheckedNenhuma = false;
                           });
                         },
                         splashRadius: 10,
@@ -220,7 +214,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Mais ou menos',
+                        'Pressão Baixa',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -232,14 +226,11 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
-                        value: isCheckedMoreOrLess,
+                        value: isCheckedPressao,
                         onChanged: (value) {
                           setState(() {
-                            isCheckedMoreOrLess = value ?? false;
-                            isCheckedChronicle = false;
-                            isCheckedBad = false;
-                            isCheckedGood = false;
-                            isCheckedPerfect = false;
+                            isCheckedPressao = value ?? false;
+                            isCheckedNenhuma = false;
                           });
                         },
                         splashRadius: 10,
@@ -279,7 +270,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Boa, mas pode melhorar',
+                        'Problemas Cardíacos',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -291,15 +282,11 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
-                        value: isCheckedGood,
+                        value: isCheckedCardiaco,
                         onChanged: (value) {
                           setState(() {
-                            isCheckedGood = value ?? false;
-                            isCheckedChronicle = false;
-                            isCheckedBad = false;
-                            isCheckedMoreOrLess = false;
-
-                            isCheckedPerfect = false;
+                            isCheckedCardiaco = value ?? false;
+                            isCheckedNenhuma = false;
                           });
                         },
                         splashRadius: 10,
@@ -339,7 +326,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Estou em perfeita saúde',
+                        'Anemia',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -351,14 +338,128 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
-                        value: isCheckedPerfect,
+                        value: isCheckedAnemia,
                         onChanged: (value) {
                           setState(() {
-                            isCheckedPerfect = value ?? false;
-                            isCheckedChronicle = false;
-                            isCheckedBad = false;
-                            isCheckedMoreOrLess = false;
-                            isCheckedGood = false;
+                            isCheckedAnemia = value ?? false;
+                            isCheckedNenhuma = false;
+                          });
+                        },
+                        splashRadius: 10,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return AppColors
+                                  .secondaryBar; // Cor do fundo quando o checkbox está selecionado
+                            }
+                            return AppColors
+                                .white; // Cor do fundo quando o checkbox não está selecionado
+                          },
+                        ),
+                        side: const BorderSide(
+                          color: AppColors.background2,
+                          width: 2,
+                        ),
+                        shape: const CircleBorder(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: sizeOF.width * .8,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Fumante',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: TextStyles.instance.secondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Checkbox(
+                        value: isCheckedFumante,
+                        onChanged: (value) {
+                          setState(() {
+                            isCheckedFumante = value ?? false;
+                            isCheckedNenhuma = false;
+                          });
+                        },
+                        splashRadius: 10,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return AppColors
+                                  .secondaryBar; // Cor do fundo quando o checkbox está selecionado
+                            }
+                            return AppColors
+                                .white; // Cor do fundo quando o checkbox não está selecionado
+                          },
+                        ),
+                        side: const BorderSide(
+                          color: AppColors.background2,
+                          width: 2,
+                        ),
+                        shape: const CircleBorder(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: sizeOF.width * .8,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Nenhuma',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: TextStyles.instance.secondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Checkbox(
+                        value: isCheckedNenhuma,
+                        onChanged: (value) {
+                          setState(() {
+                            isCheckedNenhuma = value ?? false;
+                            isCheckedDiabetes = false;
+                            isCheckedHipertensao = false;
+                            isCheckedPressao = false;
+                            isCheckedCardiaco = false;
+                            isCheckedAnemia = false;
+                            isCheckedFumante = false;
                           });
                         },
                         splashRadius: 10,
@@ -395,7 +496,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.popAndPushNamed(
-                            context, RoutesAssets.registerQuestion);
+                            context, RoutesAssets.registerQuestion6);
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -436,7 +537,7 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.popAndPushNamed(
-                            context, RoutesAssets.registerQuestion3);
+                            context, RoutesAssets.registerQuestion8);
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

@@ -21,6 +21,8 @@ final class RoutesAssets {
   static const readingHome = '/reading';
   static const readingMorning = '/reading/morning';
   static const readingDaily = '/reading/daily';
+  static const homePacer = '/reading/pacer';
+  static const readingPacer = '/reading/readingpacer';
 
   // ----------------- Menu-------------------//
   static const menuPage = '/menu';
@@ -36,5 +38,8 @@ final class RoutesAssets {
   static const registerQuestion3 = '/register/question3';
   static const registerQuestion4 = '/register/question4';
   static const registerQuestion5 = '/register/question5';
+  static const registerQuestion6 = '/register/question6';
+  static const registerQuestion7 = '/register/question7';
+  static const registerQuestion8 = '/register/question8';
   
 }

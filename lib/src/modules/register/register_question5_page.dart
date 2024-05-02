@@ -1,8 +1,11 @@
+
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
-
+import 'package:validatorless/validatorless.dart';
 
 class RegisterQuestion5Page extends StatefulWidget {
   const RegisterQuestion5Page({super.key});
@@ -12,6 +15,9 @@ class RegisterQuestion5Page extends StatefulWidget {
 }
 
 class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
+  final formKey = GlobalKey<FormState>();
+  final alturaEC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final sizeOF = MediaQuery.sizeOf(context);
@@ -34,8 +40,7 @@ class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: SizedBox(
                 width: sizeOF.width * .8,
                 child: Text(
@@ -82,7 +87,36 @@ class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
                 ),
               ),
             ),
-  
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: SizedBox(
+                width: sizeOF.width * .8,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: alturaEC,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          AlturaInputFormatter(),
+                        ],
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Altura obrigatório'),
+                        ]),
+                        decoration: const InputDecoration(
+                          labelText: 'Altura',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 12), // Definir altura do campo de texto
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,8 +135,7 @@ class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.w600),
+                        textStyle: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       label: const Text(
                         'Voltar',
@@ -135,13 +168,17 @@ class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                       final valid = formKey.currentState?.validate() ?? false;
+                       if(valid){
+                        Navigator.pushNamed(context, RoutesAssets.registerQuestion6);
+                       } 
+                      },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.w600),
+                        textStyle: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       label: const Text('Avançar'),
                       icon: const Icon(

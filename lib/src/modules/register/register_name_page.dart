@@ -15,8 +15,8 @@ class RegisterNamePage extends StatefulWidget {
   State<RegisterNamePage> createState() => _RegisterNamePageState();
 }
 
-
-class _RegisterNamePageState extends State<RegisterNamePage> with MessageViewMixin {
+class _RegisterNamePageState extends State<RegisterNamePage>
+    with MessageViewMixin {
   final formKey = GlobalKey<FormState>();
   final nomeEC = TextEditingController();
   final sobrenomeEC = TextEditingController();
@@ -76,42 +76,56 @@ class _RegisterNamePageState extends State<RegisterNamePage> with MessageViewMix
               Padding(
                 padding: const EdgeInsets.only(left: 40.0, top: 10.0),
                 child: SizedBox(
-                  height: 40,
                   width: sizeOF.width * .8,
-                  child: TextFormField(
-                    controller: nomeEC,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Nome obrigatório'),
-                    ]),
-                    decoration: const InputDecoration(
-                      label: Text('Nome'),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: nomeEC,
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Nome obrigatório'),
+                        ]),
+                        decoration:const InputDecoration(
+                          labelText: 'Nome',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal:
+                                  12), // Definir altura do campo de texto
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-               SizedBox(
-                height: sizeOF.height * 0.04,  
+              SizedBox(
+                height: sizeOF.height * 0.04,
               ),
-                       Padding(
+                    Padding(
                 padding: const EdgeInsets.only(left: 40.0, top: 10.0),
                 child: SizedBox(
-                  height: 40,
                   width: sizeOF.width * .8,
-                  child: TextFormField(
-                    controller: sobrenomeEC,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Sobrenome obrigatório'),
-                    ]),
-                    decoration: const InputDecoration(
-                      label: Text('Sobrenome'),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: sobrenomeEC,
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Sobrenome obrigatório'),
+                        ]),
+                        decoration:const InputDecoration(
+                          labelText: 'Sobrenome',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal:
+                                  12), // Definir altura do campo de texto
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-               SizedBox(
-                height: sizeOF.height * 0.4,  
-              ),
-               Row(
+              const Spacer(),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
@@ -145,7 +159,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> with MessageViewMix
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                     height: sizeOF.height * 0.05,
+                      height: sizeOF.height * 0.05,
                       width: sizeOF.width * 0.37,
                       decoration: BoxDecoration(
                         boxShadow: const [
@@ -168,8 +182,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> with MessageViewMix
                             sobrenome = sobrenomeEC.text;
                             controller.registerName(nome, sobrenome);
                             Navigator.pushNamed(
-                              context,RoutesAssets.registerQuestion
-                            );
+                                context, RoutesAssets.registerQuestion);
                           }
                         },
                         style: ElevatedButton.styleFrom(

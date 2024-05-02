@@ -19,6 +19,7 @@ class OnboardingLoginPage extends StatelessWidget {
 
     return OnBoardingSlider(
       finishButtonText: 'Cadastro',
+
       onFinish: () {
         Navigator.push(
           context,

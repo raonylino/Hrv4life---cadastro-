@@ -86,8 +86,11 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
+                   SizedBox(
+                     width: sizeOF.width * 0.28,
+                  ),
                    Padding(
-                    padding: const EdgeInsets.only(top: 40, left: 120),
+                    padding: const EdgeInsets.only(top: 40, left: 10),
                     child: IconButton(
                       onPressed: () {
                            Navigator.pushReplacementNamed(context, RoutesAssets.menuPage);

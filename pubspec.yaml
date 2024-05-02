@@ -65,6 +65,8 @@ dependencies:
   scroll_date_picker: ^3.8.0
   gender_picker: ^1.1.0
   iirjdart: ^0.1.0
+  lottie: ^3.1.0
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +96,7 @@ flutter:
   assets:
     - assets/images/
     - assets/animation/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

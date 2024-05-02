@@ -208,6 +208,7 @@ class _HeartBPPView extends State<HeartBPMDialog> {
     }
 
 // 4. Detecção de picos e cálculo da FC
+    
     // Cálculo das derivadas
     List<double> firstDerivative = [];
     List<double> secondDerivative = [];
@@ -290,6 +291,7 @@ class _HeartBPPView extends State<HeartBPMDialog> {
               ],
             )
           : Center(
+
               child: widget.centerLoadingWidget ??
                   const CircularProgressIndicator(),
             ),

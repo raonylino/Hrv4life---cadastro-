@@ -11,7 +11,7 @@ class MenuPage extends StatelessWidget {
     final sizeOF = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.primaryLight.withOpacity(0.9),
       body: Container(
         alignment: Alignment.topCenter,
         child: Column(
@@ -20,7 +20,7 @@ class MenuPage extends StatelessWidget {
               height: sizeOF.height * 0.09,
             ),
             Container(
-              height: sizeOF.height * 0.15,
+              height: sizeOF.height * 0.23,
               width: sizeOF.width * 0.85,
               decoration: BoxDecoration(
                 boxShadow: const [
@@ -75,7 +75,7 @@ class MenuPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Menu de informações',
+                                'Editar informações',
                                 style: TextStyle(
                                   color: AppColors.white,
                                   fontSize: 14,
@@ -89,6 +89,58 @@ class MenuPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      'Como está sendo a sua experiência usando o app?',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: TextStyles.instance.secondary,
+                      ),
+                    )
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 80),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.star_border_purple500_outlined,
+                          color: Colors.white,
+                        ),
+                          Icon(
+                          Icons.star_border_purple500_outlined,
+                          color: Colors.white,
+                        ),
+                          Icon(
+                          Icons.star_border_purple500_outlined,
+                          color: Colors.white,
+                        ),
+                          Icon(
+                          Icons.star_border_purple500_outlined,
+                          color: Colors.white,
+                        ),
+                          Icon(
+                          Icons.star_border_purple500_outlined,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                      Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      'Nos avalie',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: TextStyles.instance.secondary,
+                      ),
+                    )
+                  ),
                 ],
               ),
             ),
@@ -96,7 +148,7 @@ class MenuPage extends StatelessWidget {
               height: sizeOF.height * 0.05,
             ),
             Container(
-              height: sizeOF.height * 0.17,
+              height: sizeOF.height * 0.32,
               width: sizeOF.width * 0.85,
               decoration: BoxDecoration(
                 boxShadow: const [
@@ -114,6 +166,128 @@ class MenuPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                       Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(colors: [
+                                  Color(0xFFFC7732),
+                                  Color(0xFFFF9000),
+                                  Color(0xFFFFCDA5),
+                                ]),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Text(
+                                'Meu Perfil',
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: TextStyles.instance.secondary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                        margin:
+                            const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: const Divider(
+                          thickness: 0.4,
+                          color: Colors.white,
+                          height: 1,
+                        )),
+                  ),
+                          Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(colors: [
+                                  Color(0xFFFC7732),
+                                  Color(0xFFFF9000),
+                                  Color(0xFFFFCDA5),
+                                ]),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(
+                                Icons.wifi_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Text(
+                                'Sincronizar dados',
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: TextStyles.instance.secondary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                        margin:
+                            const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: const Divider(
+                          thickness: 0.4,
+                          color: Colors.white,
+                          height: 1,
+                        )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
@@ -197,7 +371,7 @@ class MenuPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: Text(
-                                'Sair',
+                                'Fechar',
                                 style: TextStyle(
                                   color: AppColors.white,
                                   fontSize: 16,
