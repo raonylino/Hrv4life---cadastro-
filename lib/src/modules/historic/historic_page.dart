@@ -21,7 +21,7 @@ class HistoricPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 60),
               child: Text(
-                'Historico',
+                'Histórico',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -34,7 +34,7 @@ class HistoricPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Text(
-                'Ultima medidas realizadas',
+                'Ultimas medidas realizadas',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -62,9 +62,9 @@ class HistoricPage extends StatelessWidget {
         items: const [
           TabItem(icon: Icons.home, title: 'Inicio'),
           // TabItem(icon: Icons.edit_note, title: 'Diario'),
-          TabItem(icon: Icons.add, title: 'Leitura'),
+          TabItem(icon: Icons.add, title: 'Medidas'),
           // TabItem(icon: Icons.message, title: 'Chat'),
-          TabItem(icon: Icons.calendar_month_rounded, title: 'Historico'),
+          TabItem(icon: Icons.calendar_month_rounded, title: 'Histórico'),
         ],
         initialActiveIndex: 2,
         onTap: (int i) {

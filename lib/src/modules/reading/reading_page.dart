@@ -93,7 +93,7 @@ class ReadingPage extends StatelessWidget {
                               ),
                             ),
                             AutoSizeText(
-                              'Avaliação Funcional',
+                              'Avaliação Diária',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black,
@@ -231,9 +231,9 @@ class ReadingPage extends StatelessWidget {
         items: const [
           TabItem(icon: Icons.home, title: 'Inicio'),
           // TabItem(icon: Icons.edit_note, title: 'Diario'),
-          TabItem(icon: Icons.add, title: 'Leitura'),
+          TabItem(icon: Icons.add, title: 'Medidas'),
           // TabItem(icon: Icons.message, title: 'Chat'),
-          TabItem(icon: Icons.calendar_month_rounded, title: 'Historico'),
+          TabItem(icon: Icons.calendar_month_rounded, title: 'Histórico'),
         ],
         initialActiveIndex: 1,
         onTap: (int i) {

@@ -536,8 +536,33 @@ class _RegisterQuestion7PageState extends State<RegisterQuestion7Page> {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.popAndPushNamed(
-                            context, RoutesAssets.registerQuestion8);
+                        if (isCheckedNenhuma == true ||
+                            isCheckedDiabetes == true ||
+                            isCheckedHipertensao == true ||
+                            isCheckedPressao == true ||
+                            isCheckedCardiaco == true ||
+                            isCheckedAnemia == true ||
+                            isCheckedFumante == true) {
+                          Navigator.popAndPushNamed(
+                              context, RoutesAssets.registerQuestion8);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 2),
+                              backgroundColor: AppColors.primaryLight,
+                              content: Text(
+                                'Selecione uma resposta',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: TextStyles.instance.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

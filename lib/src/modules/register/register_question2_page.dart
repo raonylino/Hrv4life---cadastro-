@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hrv4life_core/hrv4life_core.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
@@ -10,7 +11,7 @@ class RegisterQuestion2Page extends StatefulWidget {
   State<RegisterQuestion2Page> createState() => _RegisterQuestion2PageState();
 }
 
-class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
+class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> with MessageViewMixin {
   bool isCheckedChronicle = false;
   bool isCheckedBad = false;
   bool isCheckedMoreOrLess = false;
@@ -435,8 +436,31 @@ class _RegisterQuestion2PageState extends State<RegisterQuestion2Page> {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () {
+                        if(isCheckedMoreOrLess == true ||
+                            isCheckedChronicle == true ||
+                            isCheckedBad == true ||
+                            isCheckedGood == true ||
+                            isCheckedPerfect == true){
                         Navigator.popAndPushNamed(
                             context, RoutesAssets.registerQuestion3);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 2),
+                              backgroundColor: AppColors.primaryLight,
+                              content: Text(
+                                'Selecione uma resposta',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: TextStyles.instance.primary,
+                                  fontWeight: FontWeight.w600,
+                                  ),
+                                textAlign: TextAlign.center,
+                                ),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

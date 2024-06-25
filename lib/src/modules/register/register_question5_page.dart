@@ -106,7 +106,7 @@ class _RegisterQuestion5PageState extends State<RegisterQuestion5Page> {
                           Validatorless.required('Altura obrigatório'),
                         ]),
                         decoration: const InputDecoration(
-                          labelText: 'Altura',
+                          labelText: 'Altura em metros',
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10,
                               horizontal: 12), // Definir altura do campo de texto

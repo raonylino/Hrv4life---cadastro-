@@ -105,7 +105,7 @@ class _RegisterQuestion6PageState extends State<RegisterQuestion6Page> {
                           Validatorless.required('Peso obrigatório'),
                         ]),
                         decoration: const InputDecoration(
-                          labelText: 'Peso',
+                          labelText: 'Peso em Kg',
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10,
                               horizontal: 12), // Definir altura do campo de texto

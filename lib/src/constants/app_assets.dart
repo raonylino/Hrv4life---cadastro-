@@ -12,15 +12,16 @@ class AppAssets {
   static const String splash = 'assets/images/logo.png';
   static const String womanInstruction = 'assets/images/woman_instruction.png';
   static const String heartGif = 'assets/images/heart.gif';
+  static const String readingGif= 'assets/images/medir.gif';
 
   /* ---------------------------------- ANIMATION --------------------------------- */
   static const String pulse = 'assets/animation/pulse2.riv';
   static const String pacerFace = 'assets/animation/pacerFaceLottie.json';
   static const String pulseHeart = 'assets/animation/pulseHeartLottie.json';
   static const String pulseCircle = 'assets/animation/pulseCircleLottie.json';
-    static const String mapLottie = 'assets/animation/mapLottie.json';
-    static const String pacerCompleto = 'assets/animation/pacerCompleto.json';
-
+  static const String mapLottie = 'assets/animation/mapLottie.json';
+  static const String pacerCompleto = 'assets/animation/pacerCompleto.json';
+  static const String ideiaLottie = 'assets/animation/ideia.json';
 
   /* ---------------------------------- ICONS --------------------------------- */
   static const String google = 'assets/images/google.svg';

@@ -269,7 +269,7 @@ class _PacerPageState extends State<PacerPage> with TickerProviderStateMixin {
                       ),
                       Expanded(
                         child: Text(
-                          'Escolha a posição de leitura',
+                          'Escolha a posição de Medida',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

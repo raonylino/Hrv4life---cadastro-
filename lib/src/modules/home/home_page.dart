@@ -1,12 +1,45 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hrv4life_flutter/src/constants/app_assets.dart';
 import 'package:hrv4life_flutter/src/constants/app_colors.dart';
 import 'package:hrv4life_flutter/src/constants/app_text_styles.dart';
 import 'package:hrv4life_flutter/src/constants/routes_assets.dart';
+import 'package:lottie/lottie.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String _greeting = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _updateGreeting();
+    // Atualizar a saudação a cada minuto
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      _updateGreeting();
+    });
+  }
+
+  void _updateGreeting() {
+    DateTime now = DateTime.now();
+    int hour = now.hour;
+    setState(() {
+      _greeting = (hour >= 5 && hour < 12)
+          ? 'Bom dia'
+          : (hour < 18)
+              ? 'Boa tarde'
+              : 'Boa noite';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +65,17 @@ class HomePage extends StatelessWidget {
                 tileMode: TileMode.mirror,
               ),
               boxShadow: [
-                    BoxShadow(
-                      blurStyle: BlurStyle.normal,
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
+                BoxShadow(
+                  blurStyle: BlurStyle.normal,
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: SizedBox(
-              width: sizeOF.width *.9,
+              width: sizeOF.width * .9,
               child: Row(
                 children: [
                   Padding(
@@ -67,7 +100,7 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Bom dia,',
+                          '$_greeting,',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -86,20 +119,21 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                   SizedBox(
-                     width: sizeOF.width * 0.28,
+                  SizedBox(
+                    width: sizeOF.width * 0.28,
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(top: 40, left: 10),
                     child: IconButton(
                       onPressed: () {
-                           Navigator.pushReplacementNamed(context, RoutesAssets.menuPage);
+                        Navigator.pushReplacementNamed(
+                            context, RoutesAssets.menuPage);
                       },
-                     icon: const Icon(
-                      Icons.menu,
-                      size: 25,
-                      color: Colors.white,
-                     ),
+                      icon: const Icon(
+                        Icons.menu,
+                        size: 25,
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 ],
@@ -108,7 +142,7 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: sizeOF.height * 0.03),
           Container(
-            height: sizeOF.height * .22,
+            height: sizeOF.height * .2,
             width: sizeOF.width * .9,
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -119,14 +153,14 @@ class HomePage extends StatelessWidget {
                   color: Colors.black.withOpacity(0.2),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: const Offset(0, 3),
+                  offset: const Offset(6, 6),
                 ),
               ],
             ),
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Avliação Diária',
+                child: Text('Avaliação Diária',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -141,8 +175,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: AutoSizeText('Ainda não registramos a sua Avaliação de \nhoje',
+                padding: const EdgeInsets.only(top: 16, bottom: 8),
+                child: AutoSizeText('Você ainda não fez sua avaliação hoje?',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black38,
@@ -150,117 +184,138 @@ class HomePage extends StatelessWidget {
                       fontFamily: TextStyles.instance.secondary,
                     )),
               ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: sizeOF.width * 0.5,
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(0, 4),
-                            blurRadius: 5.0)
-                      ],
-                      gradient: const LinearGradient(colors: [
-                        Color(0xFFFF9000),
-                        Color(0xFFFD821C),
-                        Color(0xFFF37221)
-                      ]),
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/home/morning');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: sizeOF.width * 0.4,
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black26,
+                              offset: Offset(0, 4),
+                              blurRadius: 5.0)
+                        ],
+                        gradient: const LinearGradient(colors: [
+                          Color(0xFFFF9000),
+                          Color(0xFFFD821C),
+                          Color(0xFFF37221)
+                        ]),
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                      child: const Text("Iniciar Avaliação"),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/home/morning');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        child: Text(
+                          "Iniciar avaliação",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: TextStyles.instance.secondary,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: sizeOF.height * 0.057,
+                      width: sizeOF.width * 0.4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/home/morning');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        child: const Text(
+                          "Anotar exames",
+                          style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ]),
           ),
           SizedBox(height: sizeOF.height * 0.02),
-          Container(
-            alignment: AlignmentDirectional.centerStart,
-            height: sizeOF.height * 0.16,
-            width: MediaQuery.of(context).size.width * .9,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment(0.8, 1),
-                colors: <Color>[
-                  Color(0xFFFF9000),
-                  Color(0xffFD821C),
-                  Color(0xffF37221),
-                ], // Gradient from https://learnui.design/tools/gradient-generator.html
-                tileMode: TileMode.mirror,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: AlignmentDirectional.centerStart,
+                height: sizeOF.height * 0.17,
+                width: MediaQuery.of(context).size.width * .7,
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16, left: 15),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Dica do dia',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: TextStyles.instance.secondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1, left: 15, right: 15),
+                    child: AutoSizeText(
+                        'Cuide da postura! Evite dores nas costas e pescoço. Sente-se sem cruzar as pernas e mantenhas costas sem se curvar muito.',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: TextStyles.instance.secondary,
+                        )),
+                  ),
+                ]),
               ),
-              boxShadow: [
-                BoxShadow(
-                  blurStyle: BlurStyle.normal,
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.wb_sunny_outlined,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Dica do dia',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: TextStyles.instance.secondary,
-                      ),
-                    ),
-                  ],
+              Container(
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.topCenter,
+                height: sizeOF.height * 0.12,
+                width: sizeOF.width * 0.2,
+                child: Transform.scale(
+                  scale: 2.0,
+                  child: Lottie.asset(
+                    AppAssets.ideiaLottie,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * .8,
-                child: const Divider(
-                  color: Colors.white38,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 1, left: 15, right: 15),
-                child: AutoSizeText(
-                    'Aqui vamos montar um banco de dados local com algumas dicas de saúde e ai o app sorteia uma delas a cada dia para aparecer aqui',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: TextStyles.instance.secondary,
-                    )),
-              ),
-            ]),
+            ],
           ),
-           SizedBox(height: sizeOF.height * 0.02),
+          SizedBox(height: sizeOF.height * 0.02),
           Container(
-            height: sizeOF.height * 0.21,
+            height: sizeOF.height * 0.23,
             width: sizeOF.width * .9,
             decoration: BoxDecoration(
               color: AppColors.white,
@@ -271,7 +326,7 @@ class HomePage extends StatelessWidget {
                   color: Colors.black.withOpacity(0.2),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: const Offset(0, 3),
+                  offset: const Offset(6, 6),
                 ),
               ],
             ),
@@ -346,9 +401,9 @@ class HomePage extends StatelessWidget {
         items: const [
           TabItem(icon: Icons.home, title: 'Inicio'),
           // TabItem(icon: Icons.edit_note, title: 'Diario'),
-          TabItem(icon: Icons.add, title: 'Leitura'),
+          TabItem(icon: Icons.add, title: 'Medidas'),
           // TabItem(icon: Icons.message, title: 'Chat'),
-          TabItem(icon: Icons.calendar_month_rounded, title: 'Historico'),
+          TabItem(icon: Icons.calendar_month_rounded, title: 'Histórico'),
         ],
         initialActiveIndex: 0,
         onTap: (int i) {
@@ -358,7 +413,8 @@ class HomePage extends StatelessWidget {
             case 1:
               Navigator.pushReplacementNamed(context, RoutesAssets.readingHome);
             case 2:
-              Navigator.pushReplacementNamed(context, RoutesAssets.historicPage);
+              Navigator.pushReplacementNamed(
+                  context, RoutesAssets.historicPage);
           }
         },
       ),

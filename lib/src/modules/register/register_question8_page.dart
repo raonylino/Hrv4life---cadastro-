@@ -78,7 +78,7 @@ class _RegisterQuestion8PageState extends State<RegisterQuestion8Page> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Qual é o seu Endereço?',
+                  'Qual é o seu CEP?',
                   style: TextStyle(
                     color: AppColors.primaryPure,
                     fontSize: 16,

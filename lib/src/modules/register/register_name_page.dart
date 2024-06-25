@@ -84,6 +84,7 @@ class _RegisterNamePageState extends State<RegisterNamePage>
                         controller: nomeEC,
                         validator: Validatorless.multiple([
                           Validatorless.required('Nome obrigatório'),
+                          Validatorless.regex(RegExp(r'^[a-zA-Z\s]+$'), 'Nome inválido'),
                         ]),
                         decoration:const InputDecoration(
                           labelText: 'Nome',
@@ -111,6 +112,7 @@ class _RegisterNamePageState extends State<RegisterNamePage>
                         controller: sobrenomeEC,
                         validator: Validatorless.multiple([
                           Validatorless.required('Sobrenome obrigatório'),
+                          Validatorless.regex(RegExp(r'^[a-zA-Z\s]+$'), 'Sobrenome inválido'),
                         ]),
                         decoration:const InputDecoration(
                           labelText: 'Sobrenome',
