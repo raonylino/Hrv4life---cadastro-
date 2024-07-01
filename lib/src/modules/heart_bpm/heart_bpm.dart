@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hrv4life_flutter/src/modules/heart_bpm/heartBPM_controller.dart';
+import 'package:iirjdart/butterworth.dart';
+
+////CAPTURA DE DADOS E INICIALIZACAO////
 // Modelo para armazenar o valor atual do BPM cardíaco
 
 /// Classe para armazenar um ponto de dados de amostra
@@ -25,7 +28,6 @@ class SensorValue {
 }
 
 /// Obtém batimentos cardíacos por minuto usando o sensor da câmera
-// ignore: must_be_immutable
 class HeartBPMDialog extends StatefulWidget {
   /// Este é o widget de carregamento
   final Widget? centerLoadingWidget;
@@ -67,6 +69,12 @@ class HeartBPMDialog extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
   _HeartBPPView createState() => _HeartBPPView();
+}
+
+// Função auxiliar para verificar se um valor está dentro de um intervalo
+bool _isWithinRange(int value, int reference, double percentage) {
+  double range = reference * percentage;
+  return value >= reference - range && value <= reference + range;
 }
 
 class _HeartBPPView extends State<HeartBPMDialog> {
@@ -117,7 +125,7 @@ class _HeartBPPView extends State<HeartBPMDialog> {
       // 3. inicializar a câmera
       await _controller!.initialize();
 
-      // 4. definir a tocha para ON e iniciar o fluxo de imagens
+      // 4. definir flash para ON e iniciar o fluxo de imagens
       Future.delayed(const Duration(milliseconds: 500))
           .then((value) => _controller!.setFlashMode(FlashMode.torch));
 
@@ -146,6 +154,10 @@ class _HeartBPPView extends State<HeartBPMDialog> {
       growable: true);
 
   void _scanImage(CameraImage image) async {
+    setState(() {
+      _processing = true; // Indica que estamos processando uma imagem
+    });
+
     // torna o sistema ocupado
     // obter o valor médio da imagem
     double avg =
@@ -155,7 +167,7 @@ class _HeartBPPView extends State<HeartBPMDialog> {
     measureWindow.removeAt(0);
     measureWindow.add(SensorValue(time: DateTime.now(), value: avg));
 
-    _smoothBPM(avg).then((value) {
+    if (widget.onRawData != null) {
       widget.onRawData!(
         // chama a função fornecida com a nova amostra de dados
         SensorValue(
@@ -163,52 +175,175 @@ class _HeartBPPView extends State<HeartBPMDialog> {
           value: avg,
         ),
       );
+    }
 
-      Future<void>.delayed(Duration(milliseconds: widget.sampleDelay))
-          .then((onValue) {
-        if (mounted) {
-          setState(() {
-            _processing = false;
-          });
-        }
-      });
+    // Resetando _processing após o processamento da imagem
+    setState(() {
+      _processing = false; // Redefine para false após o processamento
     });
   }
 
-  Future<int> _smoothBPM(double newValue) async {
+////PRE-PROCESSAMENTO (SUAVIZAÇÃO E VALIDACAO)////
+  Future<void> preProcessamento(double value) async {
+    // 1. Extract values and times from the measurement window
+    List<double> values = measureWindow.map((e) => e.value.toDouble()).toList();
+    List<double> times = measureWindow
+        .map((e) => e.time.millisecondsSinceEpoch.toDouble())
+        .toList();
 
+    // 2. Apply cubic spline interpolation
+    List<double> newTimes = [];
+    double startTime = times.first;
+    double endTime = times.last;
+    int numPoints = 100; // Number of points for interpolation
 
-// 1. Suavização ZigZag
-    for (int i = 2; i < measureWindow.length - 2; i++) {
-      if ((measureWindow[i - 1].value < measureWindow[i].value &&
-              measureWindow[i + 1].value < measureWindow[i].value) ||
-          (measureWindow[i - 1].value > measureWindow[i].value &&
-              measureWindow[i + 1].value > measureWindow[i].value)) {
-        if ((measureWindow[i].value - measureWindow[i + 2].value).abs() < 7) {
-          measureWindow[i] = SensorValue(
-            time: measureWindow[i].time,
-            value: (measureWindow[i - 1].value + measureWindow[i + 2].value) /
-                2, // Média simples
-          );
+    if (numPoints <= 0) {
+      throw ArgumentError("numPoints deve ser maior que 0.");
+    }
+
+    for (int i = 0; i <= numPoints; i++) {
+      double t = startTime + i * (endTime - startTime) / numPoints;
+      newTimes.add(t);
+    }
+
+    List<double> interpolatedValues = splineInterp(times, values, newTimes, 1);
+
+    // Update the measurement window with interpolated values
+    for (int i = 0; i < measureWindow.length; i++) {
+      measureWindow[i] = SensorValue(
+          time: measureWindow[i].time, value: interpolatedValues[i]);
+    }
+
+    // 3. Min-Max Normalization
+    double minValue = findMin(measureWindow.map((e) => e.value).toList());
+    double maxValue = findMax(measureWindow.map((e) => e.value).toList());
+
+    if (maxValue == minValue) {
+      // Handle case where all values are the same
+      for (int i = 0; i < measureWindow.length; i++) {
+        measureWindow[i] = SensorValue(
+            time: measureWindow[i].time, value: 0.001); // Normalized value
+      }
+    } else {
+      for (int i = 0; i < measureWindow.length; i++) {
+        double normalizedValue =
+            (measureWindow[i].value - minValue) / (maxValue - minValue);
+        if (!normalizedValue.isFinite) {
+          normalizedValue = 0.0; // Ou algum outro valor padrão
         }
+        measureWindow[i] = SensorValue(
+            time: measureWindow[i].time,
+            value: normalizedValue); // Normalized value
       }
     }
 
-// 2. Média Móvel Ponderada
-    List<double> weights = [0.68, 0.35, 0.49, 0.16];
-    for (int i = 0; i < measureWindow.length - 3; i++) {
-      // -3 para cobrir os 4 pesos
-      measureWindow[i] = SensorValue(
-        time: measureWindow[i].time,
-        value: weights[0] * measureWindow[i].value +
-            weights[1] * measureWindow[i + 1].value +
-            weights[2] * measureWindow[i + 2].value +
-            weights[3] * measureWindow[i + 3].value,
-      );
+    // Apply low-pass and high-pass filters
+    Butterworth butterworthLowpass = Butterworth();
+    butterworthLowpass.lowPass(2, 30, 4);
+
+    Butterworth butterworthHighpass = Butterworth();
+    butterworthHighpass.highPass(2, 30, 0.4);
+
+    for (int i = 0; i < measureWindow.length; i++) {
+      double filteredSignalLowpass =
+          butterworthLowpass.filter(measureWindow[i].value);
+      double filteredSignal = butterworthHighpass.filter(filteredSignalLowpass);
+      measureWindow[i] =
+          SensorValue(time: measureWindow[i].time, value: filteredSignal);
     }
 
-// 4. Detecção de picos e cálculo da FC
-    
+    // Update current BPM value
+    if (interpolatedValues.isNotEmpty) {
+      double lastValue = interpolatedValues.last;
+      if (!lastValue.isFinite) {
+        lastValue = 0.0; // Ou algum outro valor padrão
+      }
+      currentValue = lastValue.round();
+      widget.onBPM(currentValue); // Call the callback with the new BPM value
+    }
+  }
+
+  /// Cubic spline interpolation function
+  List<double> splineInterp(
+      List<double> x, List<double> y, List<double> xInterp, int boundaryType) {
+    int n = x.length;
+    int nInterp = xInterp.length;
+
+    if (n < 2 || nInterp < 1) {
+      throw ArgumentError(
+          "Erro SplineInterp! Argumentos possuem dimensões erradas.");
+    }
+
+    List<double> yInterp = List.filled(nInterp, 0.0);
+
+    List<double> a = List.filled(n, 0.0);
+    List<double> b = List.filled(n, 0.0);
+    List<double> d = List.filled(n, 0.0);
+    List<double> h = List.filled(n, 0.0);
+
+    // Compute intervals h and coefficients b
+    for (int i = 0; i < n - 1; i++) {
+      h[i] = x[i + 1] - x[i];
+      b[i] = (y[i + 1] - y[i]) / h[i];
+    }
+
+    // Compute coefficients a and d
+    List<double> alpha = List.filled(n, 0.0);
+    List<double> l = List.filled(n, 1.0);
+    List<double> mu = List.filled(n, 0.0);
+    List<double> z = List.filled(n, 0.0);
+
+    for (int i = 1; i < n - 1; i++) {
+      alpha[i] = 3 * (b[i] - b[i - 1]);
+    }
+
+    for (int i = 1; i < n - 1; i++) {
+      l[i] = 2 * (x[i + 1] - x[i - 1]) - h[i - 1] * mu[i - 1];
+      mu[i] = h[i] / l[i];
+      z[i] = (alpha[i] - h[i - 1] * z[i - 1]) / l[i];
+    }
+
+    List<double> c = List.filled(n, 0.0);
+    for (int j = n - 2; j >= 0; j--) {
+      c[j] = z[j] - mu[j] * c[j + 1];
+      b[j] = (y[j + 1] - y[j]) / h[j] - h[j] * (c[j + 1] + 2 * c[j]) / 3;
+      d[j] = (c[j + 1] - c[j]) / (3 * h[j]);
+      a[j] = y[j];
+    }
+
+    // Perform interpolation
+    for (int i = 0; i < nInterp; i++) {
+      int j = n - 2;
+      for (int k = 0; k < n - 1; k++) {
+        if (xInterp[i] < x[k + 1]) {
+          j = k;
+          break;
+        }
+      }
+      double dx = xInterp[i] - x[j];
+      yInterp[i] = a[j] + b[j] * dx + c[j] * dx * dx + d[j] * dx * dx * dx;
+    }
+
+    return yInterp;
+  }
+
+  /// Find the minimum value in a list of doubles
+  double findMin(List<double> values) => values.reduce((a, b) => a < b ? a : b);
+
+  /// Find the maximum value in a list of doubles
+  double findMax(List<double> values) => values.reduce((a, b) => a > b ? a : b);
+
+////PROCESSAMENTO PRINCIPAL////
+// 1.Função para calcular a média dos valores de uma lista
+  double calculateAverage(List<double> values) {
+    if (values.isEmpty) return 0;
+    return values.reduce((a, b) => a + b) / values.length;
+  }
+
+// 2.Função para detectar picos
+  void detectPeaks(List<SensorValue> measureWindow, List<int> rrIntervals,
+      int lastBPM, HeartBPMController heartBPMController,
+      {double minAmplitudePercentage = 0.9, int minDistance = 428}) {
     // Cálculo das derivadas
     List<double> firstDerivative = [];
     List<double> secondDerivative = [];
@@ -222,22 +357,22 @@ class _HeartBPPView extends State<HeartBPMDialog> {
           measureWindow[i - 1].value);
     }
 
+    // Calcular média dos valores absolutos da segunda derivada
+    double avgSecondDerivative =
+        calculateAverage(secondDerivative.map((e) => e.abs()).toList());
+
+    // Definir limiar adaptativo como uma porcentagem da média
+    double minAmplitude = minAmplitudePercentage * avgSecondDerivative;
+
     // Detecção de picos
-    int _counter = 0;
-    double _tempBPM = 0;
     int previousTimestamp = 0;
-
-    // Definir valores para amplitude mínima e distância mínima
-    double minAmplitude = 5.0;
-    int minDistance = 428; // em milissegundos
-
     for (int i = 1; i < secondDerivative.length - 1; i++) {
       // Verifica se a segunda derivada muda de sinal (de positivo para negativo)
       if (secondDerivative[i - 1] > 0 && secondDerivative[i] < 0) {
         // Critérios de seleção de picos
         bool isPeak = true;
 
-        // Amplitude mínima
+        // Amplitude mínima (adaptativa)
         if (secondDerivative[i].abs() < minAmplitude) {
           isPeak = false;
         }
@@ -249,21 +384,51 @@ class _HeartBPPView extends State<HeartBPMDialog> {
           isPeak = false;
         }
 
-        // Registro do pico e calculo de FC
-        if (isPeak) {
-          if (previousTimestamp != 0) {
-            _counter++;
-            _tempBPM += 60000 /
-                (measureWindow[i].time.millisecondsSinceEpoch -
-                    previousTimestamp);
+        // Procurar máximo local na primeira derivada
+        int maxIndex = i;
+        for (int j = i - 1; j >= 0 && j >= i - 200; j--) {
+          if (firstDerivative[j] > firstDerivative[maxIndex]) {
+            maxIndex = j;
+          } else {
+            break; // Parar quando encontrar um valor menor
           }
-          previousTimestamp = measureWindow[i].time.millisecondsSinceEpoch;
+        }
+
+        // Registrar o pico se o máximo local for encontrado e atender aos critérios
+        if (isPeak && maxIndex != i) {
+          int currentTimestamp =
+              measureWindow[maxIndex].time.millisecondsSinceEpoch;
+          int rrInterval = currentTimestamp - previousTimestamp;
+          print(
+              "Pico detectado em $currentTimestamp, intervalo RR: $rrInterval");
+
+          // Filtragem de intervalos espúrios
+          bool isValidInterval = rrInterval >= 428 && rrInterval <= 1500;
+          if (isValidInterval && rrIntervals.isNotEmpty) {
+            if (rrIntervals.length == 1) {
+              isValidInterval = _isWithinRange(rrInterval, rrIntervals[0], 0.3);
+            } else if (rrIntervals.length >= 10) {
+              int avgPreviousIntervals = (rrIntervals[rrIntervals.length - 1] +
+                      rrIntervals[rrIntervals.length - 2]) ~/
+                  2;
+              isValidInterval =
+                  _isWithinRange(rrInterval, avgPreviousIntervals, 0.3);
+            }
+          }
+
+          // Atualizar o último timestamp
+          previousTimestamp = currentTimestamp;
         }
       }
     }
-    currentValue = measureWindow[measureWindow.length - 1].value.toInt();
-    heartBPMController.updateCurrentValue(currentValue);
-    return currentValue;
+
+    //3. Cálculo da frequência cardíaca
+    if (rrIntervals.isNotEmpty) {
+      // Calcula a frequência cardíaca com base no último intervalo RR
+      int currentBPM = (60000 / rrIntervals.last).round();
+      // Atualiza o valor da frequência cardíaca no controlador
+      heartBPMController.updateCurrentValue(currentBPM);
+    }
   }
 
   @override
@@ -291,7 +456,6 @@ class _HeartBPPView extends State<HeartBPMDialog> {
               ],
             )
           : Center(
-
               child: widget.centerLoadingWidget ??
                   const CircularProgressIndicator(),
             ),
